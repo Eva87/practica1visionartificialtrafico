@@ -39,8 +39,11 @@ img=cv2.imread("./test/00482.jpg", 0)
 img2 = cv2.imread("./test/00482.jpg", cv2.IMREAD_GRAYSCALE)
 
 imagencolor = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR)
-#inicializamos la imagen RGB a niveles de gris
 imagenbyn = cv2.imread("./test/00482.jpg", cv2.IMREAD_GRAYSCALE)
+'''
+imagencolor = cv2.imread("./test/00400.jpg", cv2.IMREAD_COLOR)
+#inicializamos la imagen RGB a niveles de gris
+imagenbyn = cv2.imread("./test/00400.jpg", cv2.IMREAD_GRAYSCALE)'''
 #inicializamos la imagen sin cambios incluyendo el canal alfa
 imagensincambios = cv2.imread("./test/00482.jpg", cv2.IMREAD_UNCHANGED)
 imgsinparametros = cv2.imread("./test/00482.jpg")
@@ -98,8 +101,20 @@ plt.xlim([0,256])
 plt.legend(('cdf','histogram'), loc = 'upper left')
 plt.show()
 '''
-
-
+#Los histogramas por color y el histograma en blanco y negro
+b = cv2.calcHist([imagencolor], [0], None, [256], [0, 256])
+g = cv2.calcHist([imagencolor], [1], None, [256], [0, 256])
+r = cv2.calcHist([imagencolor], [2], None, [256], [0, 256])
+k = cv2.equalizeHist(imagenbyn)
+plt.subplot(3,2,1)
+plt.plot(g, color = 'g')
+plt.subplot(3,2,2)
+plt.plot(r, color = 'r')
+plt.subplot(3,2,3)
+plt.plot(b, color = 'b')
+plt.subplot(3,2,4)
+plt.plot(k, color = 'k')
+plt.show()
 
 image2 = np.uint8(255.0 * (img - img.min()) / (img.max() - img.min()))
 print('nivel de brillo máximo = ', img.max())
@@ -117,13 +132,15 @@ for polygon in polygons[0]:
     colorRGB = tuple(int(color*255) for color in colorRGB)
     output = cv2.fillPoly(output,[polygon],colorRGB)
 
+
+
 #cv2.imshow("foto", image2,  vmin=0, vmax=255)
-cv2.imshow("y=0.2992+0.587G+0.114B", y)
+'''cv2.imshow("y=0.2992+0.587G+0.114B", y)
 cv2.imshow("u=B-Y", u)
 cv2.imshow("v=R-Y", v)
 cv2.imshow("b", b)
 cv2.imshow("r", r)
 cv2.imshow("g", g)
 cv2.imshow("foto2", imu)
-cv2.imshow("foto3", output)
+cv2.imshow("foto3", output)'''
 cv2.waitKey(0)
