@@ -20,6 +20,53 @@ from skimage import io
 image = io.imread("./test/00400.jpg")
 #image = plt.imread("00002.ppm")
 
+
+image33 = cv2.imread("./test/00400.jpg", 0)
+if cv2.countNonZero(image33) == 0:
+    print ("Image is black")
+else:
+    print ("Colored image")
+
+
+
+
+#Esto aclara la imagen
+
+hist,bins=np.histogram(image.flatten(),256,[0,256])
+cdf=hist.cumsum()
+
+# Enmascara los valores iguales a cero
+cdf_m = np.ma.masked_equal(cdf, 0)
+
+# Aplica la transformación de ecualización
+cdf_m = (cdf_m - cdf_m.min()) * 255 / (cdf_m.max() - cdf_m.min())
+
+# Rellena los valores previamente enmascarados con ceros
+cdf = np.ma.filled(cdf_m, 0).astype('uint8')
+
+# Aplica la ecualización a los píxeles de la imagen original
+img2 = cdf[image]
+
+# Grafica la imagen resultante de aplicar la ecualización del histograma
+cv2.imshow('image', img2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+image=img2
+
+
+
+
+#Esto es el del tio de las manos indice.jpg
+
+
+
+
+
+
+
+
+
 # Convertimos la imagen de entero a flotante, y además convertimos el rango de los pixeles
 # de 0-255 (entero) al rango 0-1 (flotante)
 image=image/255.
