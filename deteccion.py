@@ -3,7 +3,6 @@
 #pip install opencv-contrib-python
 
 import cv2
-import sklearn
 from matplotlib import pyplot as plt
 import numpy as np
 #img=cv2.imread("./test/00401.jpg") # No se ve un pimiento, es super oscura ¿aclararla?
@@ -93,7 +92,12 @@ for polygon in polygons[0]:
     colorRGB = tuple(int(color*255) for color in colorRGB)
     output = cv2.fillPoly(output,[polygon],colorRGB)
 
-
+gray = cv2.cvtColor(imagencolor, cv2.COLOR_BGR2GRAY)  # Convertimos la imagen a escala de grises.
+keypoints=mser.detect(gray,None)
+for keypoint in keypoints:
+    radius = int(0.5 * keypoint.size)
+    x, y = np.int64(keypoint.pt)
+    cv2.circle(imagencolor, (x, y), radius, (0, 255, 255), 2)
 
 
 
@@ -109,6 +113,7 @@ cv2.imshow("g", g)
 '''
 
 
-cv2.imshow("foto2", imu)
-cv2.imshow("foto3", output)
+cv2.imshow("imu", imu)
+cv2.imshow("output", output)
+cv2.imshow('Imágenes', np.hstack([imgsinparametros, imagencolor]))
 cv2.waitKey(0)
