@@ -41,161 +41,42 @@ from PIL import Image
 img=cv2.imread("./test/00482.jpg", 0)
 #inicializamos la imagen RGB a niveles de gris
 img2 = cv2.imread("./test/00482.jpg", cv2.IMREAD_GRAYSCALE)
-
+'''
 imagencolor = cv2.imread("./train_recortadas/01/00411.jpg")
 imagenbyn = cv2.imread("./train_recortadas/01/00411.jpg", cv2.IMREAD_GRAYSCALE)
 
 '''
 imagencolor = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR)
 imagenbyn = cv2.imread("./test/00482.jpg", cv2.IMREAD_GRAYSCALE)
-''''''
+'''
 imagencolor = cv2.imread("./test/00400.jpg", cv2.IMREAD_COLOR)
 #inicializamos la imagen RGB a niveles de gris
 imagenbyn = cv2.imread("./test/00400.jpg", cv2.IMREAD_GRAYSCALE)
 '''
+'''
+imagensincambios = cv2.imread("./test/00400.jpg", cv2.IMREAD_UNCHANGED)
+imgsinparametros = cv2.imread("./test/00400.jpg")
 
+'''
 #inicializamos la imagen sin cambios incluyendo el canal alfa
+
 imagensincambios = cv2.imread("./test/00482.jpg", cv2.IMREAD_UNCHANGED)
 imgsinparametros = cv2.imread("./test/00482.jpg")
 
-imagenengris=cv2.cvtColor(imagencolor,cv2.COLOR_RGB2GRAY)
-yuvimagen=cv2.cvtColor(imagencolor, cv2.COLOR_BGR2YUV)
-hsvimagen=cv2.cvtColor(imagencolor, cv2.COLOR_BGR2HSV)
-y,u,v = cv2.split(yuvimagen)
-
-
-
-'''b=u+y
-r=u+y
-g=(y-0.2992-(0.114*b))/0.587'''
-'''r=(v/0.877)+y
-b=(u/0.492)+y
-g=(y-(0.299*r)-(0.114*b))/0.587'''
 '''
-b=(1.164*(y-16))+(2.018*(u-128))
-g=(1.164*(y-16))-(0.813*(v-128))-(0.391*(u-128))
-r=(1.164*(y-16))+(1.596*(v-128))'''
-
-
-
-b=(y+u)/2.029
-r=(y+v)
-g=y-(0.396*u)-(0.581*v)
-
-
-
+imagensincambios = cv2.imread("./20201003121440748.png", cv2.IMREAD_UNCHANGED)
+imgsinparametros = cv2.imread("./20201003121440748.png")'''
 '''
-arraytamanio25=[]
-filas=25
-columnas=25
-for i in range (filas):
-    fila=[]
-    for j in range(columnas):
-        fila.append(j)
-    arraytamanio25.append(fila)
-print(arraytamanio25)
-
-rango_parte_inferior_bajo = np.array([0,0,50], np.uint8)
-print(rango_parte_inferior_bajo)
-rango_parte_superior_bajo = np.array([10,255,255], np.uint8)
-rango_parte_inferior_alto = np.array([150,0,50], np.uint8)
-rango_parte_superior_alto = np.array([200,255,255], np.uint8)
-maskrojo1=cv2.inRange(hsvimagen, rango_parte_inferior_bajo, rango_parte_inferior_alto)
-maskrojo2=cv2.inRange(hsvimagen, rango_parte_superior_bajo, rango_parte_superior_alto)
-mascararojo=cv2.add(maskrojo1,maskrojo2)
-mascararojovis=cv2.bitwise_and(imagencolor,imagencolor,mask=mascararojo)
-cv2.imshow('mascararojo', mascararojo)
-cv2.imshow('mascararojovis', mascararojovis)
-
-
-pil_imagen=Image.fromarray(imagencolor)
-plt.imshow(pil_imagen)'''
-
-
-
-'''r=imagencolor[:,:,1]=0
-g=imagencolor[:,:,2]=0
-b=imagencolor[:,:,0]=0'''
-
-
-
-'''
-plt.subplot(2,2,1)
-plt.imshow(imagencolor[:,:,0],vmin=0,vmax=0)
-plt.subplot(2,2,2)
-plt.imshow(imagencolor[:,:,1],vmin=0,vmax=0)
-plt.subplot(2,2,3)
-plt.imshow(imagencolor[:,:,2],vmin=0,vmax=0)
-plt.show()'''
-
-
-
-'''
-histograma=cv2.calcHist([imagenbyn],[0], None,[256],[0,256])
-plt.plot(histograma, color='gray')
-plt.xlabel('intendidad de la iluminacion')
-plt.ylabel('cantidad de pixeles')
-plt.show()
-'''
-
-
-
-'''color = ('b','g','r')
-#recorrido por cada canal
-for i, c in enumerate(color):
-    '''  '''
-    cv2.calcHist(images, channels, mask, histSize, ranges[, hist[, accumulate]]
-    1.-images: imagen de estrada, puede ser a escala de grises o colores.
-    2- channels: índice de canal para el cual deseamos calcular el histograma,
-    en una imagen a escala de grises [0],
-    si la imagen es a colores podemos indicar [0], [1], [2] para los canales B,
-    G, R respectivamente.
-    3.-mask: mascara que dene la región sobre la que deseamos calcular el histograma,
-    es opcional.
-    4.-histSize: intensidad máxima, para nosotros [256].
-    5.-ranges: nuestro rango de valores, usaremos [0, 256]
-    '''  '''
-    hist = cv2.calcHist([imagencolor], [i], None, [256], [0, 256])
-    #color = c
-    plt.plot(hist, color = c)
-    #establece límites x de los ejes actuales
-    plt.xlim([0,256])
-#muestra el histograma
-plt.show()'''
-'''
-img = cv2.equalizeHist(img)
-cv2.imshow('Histogramas', img)
-cv2.waitKey()
-hist,bins = np.histogram(img.flatten(),256,[0,256])
-cdf = hist.cumsum()
-cdf_normalized = cdf * hist.max()/ cdf.max()
-plt.plot(cdf_normalized, color = 'b')
-plt.hist(img.flatten(),256,[0,256], color = 'r')
-plt.xlim([0,256])
-plt.legend(('cdf','histogram'), loc = 'upper left')
-plt.show()
-'''
-
-
-
-#Los histogramas por color y el histograma en blanco y negro
-bhist = cv2.calcHist([imagencolor], [0], None, [256], [0, 256])
-ghist = cv2.calcHist([imagencolor], [1], None, [256], [0, 256])
-rhist = cv2.calcHist([imagencolor], [2], None, [256], [0, 256])
-khist = cv2.equalizeHist(imagenbyn-5)
-plt.subplot(3,2,1)
-plt.plot(ghist, color = 'g')
-plt.subplot(3,2,2)
-plt.plot(rhist, color = 'r')
-plt.subplot(3,2,3)
-plt.plot(bhist, color = 'b')
-plt.subplot(3,2,4)
-plt.plot(khist, color = 'k')
-plt.show()
+imagensincambios = cv2.imread("./Captura.png", cv2.IMREAD_UNCHANGED)
+imgsinparametros = cv2.imread("./Captura.png")'''
 
 
 
 
+
+
+
+a=0
 image2 = np.uint8(255.0 * (img - img.min()) / (img.max() - img.min()))
 print('nivel de brillo máximo = ', img.max())
 print('nivel de brillo mìnimo = ', img.min())
@@ -214,6 +95,9 @@ for polygon in polygons[0]:
 
 
 
+
+
+
 #cv2.imshow("foto", image2,  vmin=0, vmax=255)
 '''cv2.imshow("y=0.2992+0.587G+0.114B", y)
 cv2.imshow("u=B-Y", u)
@@ -222,7 +106,9 @@ cv2.imshow("v=R-Y", v)
 cv2.imshow("b", b)
 cv2.imshow("r", r)
 cv2.imshow("g", g)
+'''
+
 
 cv2.imshow("foto2", imu)
-cv2.imshow("foto3", output)'''
+cv2.imshow("foto3", output)
 cv2.waitKey(0)
