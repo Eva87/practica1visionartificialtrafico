@@ -14,10 +14,9 @@ plt.rcParams['image.cmap'] = 'gray'
 
 
 #el modulo io de skimage sirve para cargar y guardar imagenes
-from skimage import io
 
 # leemos la imagen desde un archivo, y la almacenamos en memoria en un arreglo
-image = io.imread("./test/00400.jpg")
+image = plt.imread("./test/00400.jpg")
 #image = plt.imread("00002.ppm")
 
 
