@@ -5,8 +5,8 @@ np.set_printoptions(suppress=True)
 img = cv2.imread("./test/00575.jpg")
 img = cv2.imread("./test/00411.jpg")
 img = cv2.imread("./test/00420.jpg")
-img = cv2.imread("./test/00482.jpg")
 img = cv2.imread("./test/00403.jpg")
+img = cv2.imread("./test/00482.jpg")
 print('img:', type(img), img.shape, img.dtype)
 cv2.imshow('img', img)
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -18,15 +18,17 @@ blue_upper = np.array([10,255,255], np.uint8)
 blue_lower2 = np.array([150,0,50], np.uint8)
 blue_upper2 = np.array([200,255,255], np.uint8)
 '''
-blue_lower = np.array([0, 0, 50])
+rojo_bajo = np.array([0, 0, 50])
 blue_upper = np.array([10, 255, 255])
-blue_lower2 = np.array([150, 0, 50])
+rojo_bajo2 = np.array([150, 0, 50])
 blue_upper2 = np.array([200, 255, 255])
 
 
 blue_lower=np.array([100,50,50])
 blue_upper=np.array([124,255,255])
 
+blue_lower=np.array([19,62,164])
+blue_upper=np.array([42,255,245])
 
 mask = cv2.inRange(hsv, blue_lower, blue_upper)
 '''
