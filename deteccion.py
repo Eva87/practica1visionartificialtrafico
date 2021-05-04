@@ -35,7 +35,6 @@ import numpy as np
 #cv2.imshow("Rojo", mask)
 from random import random
 from colorsys import hsv_to_rgb
-from matplotlib import pyplot as plt
 from PIL import Image
 img=cv2.imread("./test/00482.jpg", 0)
 #inicializamos la imagen RGB a niveles de gris
