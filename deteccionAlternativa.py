@@ -6,8 +6,8 @@ imagenH = cv2.imread("./train/00141.ppm",cv2.IMREAD_GRAYSCALE)
 imagen = cv2.imread("./test/00411.jpg")
 imagen = cv2.imread("./test/00420.jpg")
 imagen = cv2.imread("./test/00403.jpg")
-imagen = cv2.imread("./test/00434.jpg") # Funciona
 imagen = cv2.imread("./test/00482.jpg")
+imagen = cv2.imread("./test/00434.jpg") # Funciona
 
 
 contrast_img = cv2.addWeighted(imagen, 2.5, np.zeros(imagen.shape, imagen.dtype), 0, 0)
@@ -64,6 +64,14 @@ if h1 - h2 > 0 and l1 - l2 > 0:
     aux = temp
     aux = cv2.cvtColor(aux,cv2.COLOR_BGR2GRAY)
 
+
+
+#redimensionamos imagen de la señal filtrada a 25*25
+dim = (25, 25)
+resized = cv2.resize(aux, dim, interpolation = cv2.INTER_AREA)
+
+
+
 ##Prueba circulos
 cimg = imagen.copy()
 circulo = cv2.HoughCircles(binary,cv2.HOUGH_GRADIENT,2,30,param1=80,param2=20,minRadius=10,maxRadius=40)
@@ -79,6 +87,7 @@ cv2.imshow('res', res)
 cv2.imshow('hsv', imagenhsv)
 cv2.imshow('threshold',binary)
 cv2.imshow('closed', closed)
+cv2.imshow('resized', resized)
 #cv2.imshow('erode', erode)
 #cv2.imshow('dilate', dilate)
 cv2.waitKey(0)
