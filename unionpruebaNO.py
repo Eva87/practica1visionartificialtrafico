@@ -4,38 +4,33 @@ import matplotlib.pyplot as plt
 from random import random
 from colorsys import hsv_to_rgb
 
-
 imagen = cv2.imread("./train/00141.ppm")
 imagen = cv2.imread("./test/00575.jpg")
-imagenH = cv2.imread("./train/00141.ppm",cv2.IMREAD_GRAYSCALE)
+imagenH = cv2.imread("./train/00141.ppm", cv2.IMREAD_GRAYSCALE)
 imagen = cv2.imread("./test/00411.jpg")
 imagen = cv2.imread("./test/00420.jpg")
 imagen = cv2.imread("./test/00403.jpg")
 imagen = cv2.imread("./test/00482.jpg")
-imagen = cv2.imread("./test/00434.jpg") # Funciona
+imagen = cv2.imread("./test/00434.jpg")  # Funciona
 
-
-imagenescalagrises= cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+imagenescalagrises = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 
 ##Prueba circulos
 cimg = imagen.copy()
-circulo = cv2.HoughCircles(imagenescalagrises,cv2.HOUGH_GRADIENT,2,30,param1=80,param2=20,minRadius=10,maxRadius=40)
+circulo = cv2.HoughCircles(imagenescalagrises, cv2.HOUGH_GRADIENT, 2, 30, param1=80, param2=20, minRadius=10,
+                           maxRadius=40)
 circuloA = cv2.HoughCircles
 circulo = np.uint16(np.around(circulo))
-for i in circulo[0,:]:
+for i in circulo[0, :]:
     # Dibuja la circusnferencia del círculo
-    cv2.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)
+    cv2.circle(cimg, (i[0], i[1]), i[2], (0, 255, 0), 2)
     # dibuja el centro del círculo
-    cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
-
-
-
+    cv2.circle(cimg, (i[0], i[1]), 2, (0, 0, 255), 3)
 
 ret, binary = cv2.threshold(cimg, 127, 255, cv2.THRESH_BINARY)
 kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
 closed = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
-canny = cv2.Canny(closed,200,300)
-
+canny = cv2.Canny(closed, 200, 300)
 
 '''
     imu = ((canny > 100) * 255).astype(np.uint8)
@@ -70,6 +65,31 @@ blurred = cv2.blur(mascaraFinal, (9, 9))
 
 '''
 
+arrayprohibido = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0],
+                          [0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0],
+                          [0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0],
+                          [0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 cv2.imshow('circulos', canny)
 cv2.imshow('imagen', imagen)
