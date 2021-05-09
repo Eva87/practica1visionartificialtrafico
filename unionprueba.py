@@ -17,16 +17,21 @@ imagen = cv2.imread("./train_recortadas/21/00001.ppm") # Falla
 
 
 imagen = cv2.imread("./test/00434.jpg") # Funciona prohibido
-imagen = cv2.imread("./test/00411.jpg") # Funciona prohibido
 imagen = cv2.imread("./test/00465.jpg") # Funciona ceda
 imagen = cv2.imread("./test/00481.jpg") # Funciona peligro
-imagen = cv2.imread("./test/00482.jpg") # Funciona prohibido
 
-imagen = cv2.imread("./test/00557.jpg") # Funciona ceda y peligro
-imagen = cv2.imread("./test/00507.jpg") # Funciona peligro con cachito
-imagen = cv2.imread("./test/00455.jpg") # Funciona medio peligro
 imagen = cv2.imread("./test/00567.jpg") # Funciona medio peligro y prohibido
+imagen = cv2.imread("./test/00482.jpg") # Funciona prohibido
+imagen = cv2.imread("./test/00411.jpg") # Funciona prohibido
+imagen = cv2.imread("./test/00446.jpg") # Funciona prohibido
+imagen = cv2.imread("./train/00013.ppm") # Funciona prohibido
 imagen = cv2.imread("./test/00548.jpg") # Funciona stop
+imagen = cv2.imread("./test/00455.jpg") # Funciona medio peligro
+imagen = cv2.imread("./test/00507.jpg") # Funciona peligro con cachito
+imagen = cv2.imread("./test/00557.jpg") # Funciona ceda y peligro
+imagen = cv2.imread("./train/00023.ppm") # peligro error pq llega a posicion negativa
+imagen = cv2.imread("./train/00013.ppm") # Funciona prohibido
+imagen = cv2.imread("./train/00078.ppm") # Funciona prohibido
 
 
 
@@ -61,10 +66,35 @@ arraymascarastop= np.array([[0,0,0,0,0,0,0,0,255,255,255,255,255,255,255,255,255
 
 #print(arraymascarastop)
 
+arraymascaraprohibido = np.array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0],
+                          [0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0],
+                          [0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0],
+                          [0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0],
+                          [0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
 
 arraymascarapeligro= np.array([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                         [0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,0,0,0],
                          [0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0],
                          [0,0,0,0,0,0,0,0,0,0,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0],
                          [0,0,0,0,0,0,0,0,0,255,255,0,255,255,0,0,0,0,0,0,0,0,0,0,0],
@@ -73,14 +103,14 @@ arraymascarapeligro= np.array([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                          [0,0,0,0,0,0,0,0,255,255,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0],
                          [0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0],
                          [0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0],
-                         [0,0,0,0,0,0,255,255,255,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0],
-                         [0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,255,255,255,0,0,0,0,0,0],
-                         [0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,255,255,255,0,0,0,0,0],
+                         [0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0],
+                         [0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0],
                          [0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0],
                          [0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0],
                          [0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0],
                          [0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0],
-                         [0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,255,0,0],
+                         [0,0,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,255,0,0],
                          [0,0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0,0],
                          [0,0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0,0],
                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -88,6 +118,37 @@ arraymascarapeligro= np.array([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
                          )
+
+
+
+arrayceda= np.array([[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0,0],
+                    [0,0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,0,0],
+                    [0,0,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,255,0,0],
+                    [0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0],
+                    [0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0],
+                    [0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0],
+                    [0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0],
+                    [0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0],
+                    [0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,255,255,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,255,255,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,255,255,0,0,255,255,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,255,255,0,255,255,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,255,255,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]])
+
+
 
 
 
@@ -133,18 +194,18 @@ mascaraFinal = cv2.add(mascara1,mascara2)
 blurdifuminarrojo = cv2.blur(mascaraFinal, (9, 9))
 
 
-ret, binary = cv2.threshold(blurdifuminarrojo, 127, 255, cv2.THRESH_BINARY)
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
-closed = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
-canny = cv2.Canny(closed,200,300)
+retderecho, binario = cv2.threshold(blurdifuminarrojo, 127, 255, cv2.THRESH_BINARY)
+nucleo = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
+cerradoimagen = cv2.morphologyEx(binario, cv2.MORPH_CLOSE, nucleo)
+cannybordes = cv2.Canny(cerradoimagen, 200, 300)
 
 
 
-imu = ((canny >100)*255).astype(np.uint8)
+imagenuint8 = ((cannybordes > 100) * 255).astype(np.uint8)
 #MSER
-salidadelmser = np.zeros((imu.shape[0], imu.shape[1], 3), dtype=np.uint8)
+salidadelmser = np.zeros((imagenuint8.shape[0], imagenuint8.shape[1], 3), dtype=np.uint8)
 mser = cv2.MSER_create(_delta=5,_max_variation=0.5,_max_area=20000)
-polygons = mser.detectRegions(imu)
+polygons = mser.detectRegions(imagenuint8)
 for polygon in polygons[0]:
     colorRGB = hsv_to_rgb(random(),1,1)
     colorRGB = tuple(int(color*255) for color in colorRGB)
@@ -152,8 +213,8 @@ for polygon in polygons[0]:
 
 
 
-contours, hierarchy = cv2.findContours(canny.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-image = cv2.findContours(canny.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+contours, hierarchy = cv2.findContours(cannybordes.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+image = cv2.findContours(cannybordes.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 print('number', len(contours))
 
 
@@ -201,9 +262,14 @@ redimensionado = cv2.resize(aux, dim, interpolation = cv2.INTER_AREA)
 
 
 auxiliarsumamascarastop=0
+
 for i in range (25):
     for j in range(i):
-        auxiliarsumamascarastop=auxiliarsumamascarastop+(arraymascarastop[i,j]*redimensionado[i,j])
+        #auxiliarsumamascarastop=auxiliarsumamascarastop+(arraymascarastop[i,j]*redimensionado[i,j])
+        auxxxx=arraymascarastop[i,j]*redimensionado[i,j]
+        aaaauuuuuxxx=auxxxx[0]
+        if aaaauuuuuxxx > 0:
+            auxiliarsumamascarastop=auxiliarsumamascarastop+1
 
 print("auxiliarsumamascarastop" )
 print( auxiliarsumamascarastop)
@@ -211,14 +277,53 @@ print( auxiliarsumamascarastop)
 auxiliarsumamascarapeligro=0
 for i in range (25):
     for j in range(i):
-        auxiliarsumamascarapeligro=auxiliarsumamascarapeligro+(arraymascarapeligro[i,j]*redimensionado[i,j])
+        #auxiliarsumamascarapeligro=auxiliarsumamascarapeligro+(arraymascarapeligro[i,j]*redimensionado[i,j])
+        auxxxx=arraymascarapeligro[i,j]*redimensionado[i,j]
+        aaaauuuuuxxx=auxxxx[0]
+        if aaaauuuuuxxx > 0:
+            auxiliarsumamascarapeligro=auxiliarsumamascarapeligro+1
 
 print("auxiliarsumamascarapeligro" )
 print( auxiliarsumamascarapeligro)
 
+auxiliararraymascaraprohibido=0
+for i in range (25):
+    for j in range(i):
+        #auxiliararraymascaraprohibido=auxiliararraymascaraprohibido+(arraymascaraprohibido[i,j]*redimensionado[i,j])
+        auxxxx=arraymascaraprohibido[i,j]*redimensionado[i,j]
+        aaaauuuuuxxx=auxxxx[0]
+        if aaaauuuuuxxx > 0:
+            auxiliararraymascaraprohibido=auxiliararraymascaraprohibido+1
+
+print("auxiliararraymascaraprohibido" )
+print( auxiliararraymascaraprohibido)
+
+'''Dudas:
+ si haces suma mas multiplicacion te va a dar los valores rgb que tiene, pero no la suma de los valores rgb, 
+ no tendria mas sentido sumar solo si if(!= 0 ) y si la mascara coincide los se sumaria y tendrias si la mascara coincide
+ 
+lo del mser tiene qeu ser por un lado y el reconocimiento alternativo por otro, o todo junto
+
+La salida tiene queser los cuatro puntos de la imagen contenida
+
+en la salida gt.txt 00027.ppm;969;386;1024;441;2 son cinco valores, con que se corresponden
+x1,x2,y1,y2,tiposeñal
+
+si en una imagen hay tres señales, se muestra una imagen o las tres encontradas
+
+que imagens se tienen que pasar test o train
+
+importar de una clase a otra
+como usar el main.py
+
+
+
+'''
+
+
 cv2.imshow('original',imagen)
 #cv2.imshow('contrast_img',contrast_img)
-cv2.imshow('canny',canny)
+cv2.imshow('canny', cannybordes)
 cv2.imshow('redimensionado', redimensionado)
 cv2.imshow('salidadelmser', salidadelmser)
 cv2.imshow('aux', aux)
