@@ -46,6 +46,10 @@ for con in contours:
     box = np.int0(cv2.boxPoints(rect))
     cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
     print([box])
+
+
+
+
 h1 = max([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
 h2 = min([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
 l1 = max([box][0][0][0], [box][0][1][0], [box][0][2][0], [box][0][3][0])
@@ -72,17 +76,10 @@ resized = cv2.resize(aux, dim, interpolation = cv2.INTER_AREA)
 
 
 
-##Prueba circulos
-cimg = imagen.copy()
-circulo = cv2.HoughCircles(binary,cv2.HOUGH_GRADIENT,2,30,param1=80,param2=20,minRadius=10,maxRadius=40)
-circuloA = cv2.HoughCircles
-circulo = np.uint16(np.around(circulo))
-for i in circulo[0,:]:
-    # Dibuja la circusnferencia del círculo
-    cv2.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)
-    # dibuja el centro del círculo
-    cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
-cv2.imshow('circulos',cimg)
+
+
+
+
 cv2.imshow('res', res)
 cv2.imshow('hsv', imagenhsv)
 cv2.imshow('threshold',binary)
