@@ -36,6 +36,7 @@ imagen = cv2.imread("./test/00548.jpg") # Funciona stop
 imagen = cv2.imread("./train/00078.ppm") # Funciona prohibido
 imagen = cv2.imread("./train/00013.ppm") # Funciona prohibido
 imagen = cv2.imread("./test/00434.jpg") # Funciona
+imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR)
 
 
 
@@ -120,10 +121,12 @@ print('number', len(contours))
 
 i = 0
 res = salidadelmser.copy()
+res2 = imagen.copy()
 for con in contours:
     rect = cv2.minAreaRect(con)
     box = np.int0(cv2.boxPoints(rect))
     cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
+    cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
     print([box])
     '''Aqui hay que hacer la busqueda de la señal concreta en cada iteracion
     
@@ -162,13 +165,16 @@ redimensionado = cv2.resize(aux, dim, interpolation = cv2.INTER_AREA)
 auxiliarsumamascarastop=0
 auxiliararraymascaraprohibido=0
 auxiliarsumamascarapeligro=0
-
+'''
 for i in range (25):
     for j in range(25):
         auxiliarsumamascarastop=auxiliarsumamascarastop+(arraymascarastop[i,j]*redimensionado[i,j])
         auxiliarsumamascarapeligro=auxiliarsumamascarapeligro+(arraymascarapeligro[i,j]*redimensionado[i,j])
-        auxiliararraymascaraprohibido=auxiliararraymascaraprohibido+(arraymascaraprohibido[i,j]*redimensionado[i,j])
+        auxiliararraymascaraprohibido=auxiliararraymascaraprohibido+(arraymascaraprohibido[i,j]*redimensionado[i,j])'''
 
+auxiliarsumamascarastop=correlarm(redimensionado,"stop")
+auxiliararraymascaraprohibido = correlarm(redimensionado, "prohibido")
+auxiliarsumamascarapeligro = correlarm(redimensionado, "peligro")
 
 print("auxiliarsumamascarastop" )
 print( auxiliarsumamascarastop)
@@ -205,6 +211,7 @@ como usar el main.py
 
 cv2.imshow('original',imagen)
 cv2.imshow('res',res)
+cv2.imshow('res2',res2)
 #cv2.imshow('contrast_img',contrast_img)
 cv2.imshow('canny', cannybordes)
 cv2.imshow('redimensionado', redimensionado)

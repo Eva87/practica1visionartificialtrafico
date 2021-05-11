@@ -8,6 +8,7 @@ imagen = cv2.imread("./test/00420.jpg")
 imagen = cv2.imread("./test/00403.jpg")
 imagen = cv2.imread("./test/00482.jpg")
 imagen = cv2.imread("./test/00434.jpg") # Funciona
+imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR)
 
 
 contrast_img = cv2.addWeighted(imagen, 2.5, np.zeros(imagen.shape, imagen.dtype), 0, 0)

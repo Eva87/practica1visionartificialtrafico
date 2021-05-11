@@ -42,56 +42,6 @@ cv2.waitKey(0)
 
 
 
-
-
-
-
-
-
-
-
-
-
-'''
-img=img_gauss
-a=0
-image2 = np.uint8(255.0 * (img - img.min()) / (img.max() - img.min()))
-print('nivel de brillo máximo = ', img.max())
-print('nivel de brillo mìnimo = ', img.min())
-# umbralización
-# imagen oscura 20 y imagen clara 100
-#if img.max()
-imu = ((imagenclarabyn >100)*255).astype(np.uint8)
-#MSER
-output = np.zeros((imu.shape[0],imu.shape[1],3),dtype=np.uint8)
-mser = cv2.MSER_create(_delta=5,_max_variation=0.5,_max_area=20000)
-polygons = mser.detectRegions(imu)
-for polygon in polygons[0]:
-    colorRGB = hsv_to_rgb(random(),1,1)
-    colorRGB = tuple(int(color*255) for color in colorRGB)
-    output = cv2.fillPoly(output,[polygon],colorRGB)
-
-gray = cv2.cvtColor(imagenclara, cv2.COLOR_BGR2GRAY)  # Convertimos la imagen a escala de grises.
-keypoints=mser.detect(gray,None)
-for keypoint in keypoints:
-    radius = int(0.5 * keypoint.size)
-    x, y = np.int64(keypoint.pt)
-    cv2.circle(imagenclara, (x, y), radius, (0, 255, 255), 2)
-    
-
-
-
-cv2.imshow("imu", imu)
-cv2.imshow("output", output)
-cv2.waitKey(0)
-
-
-'''
-
-
-
-
-
 '''import argparse
 
 max_value = 255
