@@ -104,10 +104,6 @@ for con in contornos:
              pero es problema de nuestros yo de mañana
              '''
 
-            # if locals().get('aux'):
-            # if 'aux' != None:
-            # if len(aux)>0:
-            # if aux  is not None :
 
 
             if aux  is not None :
@@ -130,8 +126,14 @@ for con in contornos:
                 print("auxiliarsumamascaraprohibido")
                 print(auxiliarsumamascaraprohibido)
 
-'''Dudas:
+                if auxiliarsumamascarastop[2]>auxiliarsumamascarapeligro[2] and auxiliarsumamascarastop[2]>auxiliarsumamascaraprohibido[2]:
+                    print("stop")
+                if auxiliarsumamascarapeligro[2]>auxiliarsumamascarastop[2] and auxiliarsumamascarapeligro[2]>auxiliarsumamascaraprohibido[2]:
+                    print("peligro")
+                if auxiliarsumamascaraprohibido[2]>auxiliarsumamascarapeligro[2] and auxiliarsumamascaraprohibido[2]>auxiliarsumamascarastop[2]:
+                    print("prohibido")
 
+'''
 
 en la salida gt.txt 00027.ppm;969;386;1024;441;2 son cinco valores, con que se corresponden
 x1,x2,y1,y2,tiposeñal
@@ -147,7 +149,6 @@ como usar el main.py
 cv2.imshow('original', imagen)
 cv2.imshow('res', res)
 cv2.imshow('res2', res2)
-# cv2.imshow('contrast_img',contrast_img)
 cv2.imshow('canny', cannybordes)
 cv2.imshow('redimensionado', redimensionado)
 cv2.imshow('salidadelmser', salMSER)
