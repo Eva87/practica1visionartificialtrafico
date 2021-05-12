@@ -2,6 +2,10 @@ import cv2
 import numpy as np
 from random import random
 from colorsys import hsv_to_rgb
+from mascarasdelasformasdelassennales import *
+from mejoradeimagen import *
+
+
 img=cv2.imread("./test/00482.jpg", 0)
 
 
@@ -50,34 +54,13 @@ for polygon in polygons[0]:
 imagenhsv = cv2.cvtColor(imagenColor, cv2.COLOR_BGR2HSV)
 cv2.imshow('original',imagenColor)
 
-rojo_bajo = np.array([0, 80, 40])
-rojo_alto = np.array([10, 255, 255])
-rojo_bajo2 = np.array([160, 50, 45])
-rojo_alto2 = np.array([186, 255, 255])
-mascara1 = cv2.inRange(imagenhsv, rojo_bajo, rojo_alto)
-mascara2 = cv2.inRange(imagenhsv, rojo_bajo2, rojo_alto2)
-mascaraFinal = cv2.add(mascara1,mascara2)
 
-blurdifuminarrojo = cv2.blur(mascaraFinal, (9, 9))
-retderecho, binario = cv2.threshold(blurdifuminarrojo, 127, 255, cv2.THRESH_BINARY)
-nucleo = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
-cerradoimagen = cv2.morphologyEx(binario, cv2.MORPH_CLOSE, nucleo)
-
-# imagen oscura 20 y imagen clara 100
-imageUint8 = ((imagenColor > 100) * 255).astype(np.uint8)
-
-#MSER
-arrayCeros = np.zeros((imageUint8.shape[0], imageUint8.shape[1], 3), dtype=np.uint8)
-mser = cv2.MSER_create(_delta=5,_max_variation=0.5,_max_area=20000)
-polygons = mser.detectRegions(imageUint8)
-for polygon in polygons[0]:
-    colorRGB = hsv_to_rgb(random(),1,1)
-    colorRGB = tuple(int(color*255) for color in colorRGB)
-    salidaMSER = cv2.fillPoly(arrayCeros, [polygon], colorRGB)
+(cannybordes, cerradoimagen)=filtradorojoDifuminarNucleoCerradoCanny(imagenhsv)
+salMSER=hacedordeMSER(cannybordes)
 
 
 # Convertimos la imagen a escala de grises.
-gray = cv2.cvtColor(salidaMSER, cv2.COLOR_BGR2GRAY)
+gray = cv2.cvtColor(salMSER, cv2.COLOR_BGR2GRAY)
 
 '''ret, binary = cv2.threshold(salidaMSER, 127, 255, 0)
 
@@ -96,13 +79,9 @@ res = imagenColor.copy()
 for con in contours:
     rect = cv2.minAreaRect(con)
     box = np.int0(cv2.boxPoints(rect))
-    '''if dist box0,0 - box 1,0  < o > 2x  (dist box0,1 - box 1,1 )
-    
-    
-    Habrá que pasar a un rectángulo los píxeles de la región detectada (cv2.boundingRect).
-◦ Se pueden eliminar las regiones con una relación de aspecto (ancho/alto) muy diferente de
-1.0.
 
+    '''
+    
 
 Hay que guardar la imagen recortada para seguir trabajando con ella recortada?
 
@@ -116,11 +95,12 @@ la mascara de 25*25 es mejor con 1 o con 255
     print([box])
 
 
+(auxiliarsumamascarastop,auxiliarsumamascaraprohibido,auxiliarsumamascarapeligro) = correlarm_aplicarmascarasennal(res)
+
 
 
 
 cv2.imshow('res', res)
 cv2.imshow("rectascalculadas", img)
-cv2.imshow("imageUint8", imageUint8)
-cv2.imshow("salidaMSER", salidaMSER)
+cv2.imshow("salidaMSER", salMSER)
 cv2.waitKey(0)

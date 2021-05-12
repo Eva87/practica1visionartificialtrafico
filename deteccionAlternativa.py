@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+from mascarasdelasformasdelassennales import *
+from mejoradeimagen import *
 imagen = cv2.imread("./train/00141.ppm")
 imagen = cv2.imread("./test/00575.jpg")
 imagenH = cv2.imread("./train/00141.ppm",cv2.IMREAD_GRAYSCALE)
@@ -11,33 +13,16 @@ imagen = cv2.imread("./test/00434.jpg") # Funciona
 imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR)
 
 
-contrast_img = cv2.addWeighted(imagen, 2.5, np.zeros(imagen.shape, imagen.dtype), 0, 0)
+#contrast_img = cv2.addWeighted(imagen, 2.5, np.zeros(imagen.shape, imagen.dtype), 0, 0)
 imagenhsv = cv2.cvtColor(imagen, cv2.COLOR_BGR2HSV)
-cv2.imshow('original',imagen)
-cv2.imshow('conContraste',contrast_img)
-cannyImagen2 = cv2.Canny(imagen,200,300)
-cv2.imshow('COriginal',cannyImagen2)
 
-rojo_bajo = np.array([0, 80, 40])
-rojo_alto = np.array([10, 255, 255])
-rojo_bajo2 = np.array([160, 50, 45])
-rojo_alto2 = np.array([186, 255, 255])
 
-mascara1 = cv2.inRange(imagenhsv, rojo_bajo, rojo_alto)
-mascara2 = cv2.inRange(imagenhsv, rojo_bajo2, rojo_alto2)
-mascaraFinal = cv2.add(mascara1,mascara2)
-
-blurred = cv2.blur(mascaraFinal, (9, 9))
-
-ret, binary = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY)
-kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
-closed = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
-canny = cv2.Canny(closed,200,300)
+(cannybordes, cerradoimagen)=filtradorojoDifuminarNucleoCerradoCanny(imagenhsv)
 #erode = cv2.erode(closed, None, iterations=4)
 #dilate = cv2.dilate(erode, None, iterations=4)
 
-contours, hierarchy = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-image = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+contours, hierarchy = cv2.findContours(cerradoimagen.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+image = cv2.findContours(cerradoimagen.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 print('number', len(contours))
 
 i = 0
@@ -77,14 +62,15 @@ resized = cv2.resize(aux, dim, interpolation = cv2.INTER_AREA)
 
 
 
+(auxiliarsumamascarastop,auxiliarsumamascaraprohibido,auxiliarsumamascarapeligro) = correlarm_aplicarmascarasennal(redimensionado)
+
 
 
 
 
 cv2.imshow('res', res)
 cv2.imshow('hsv', imagenhsv)
-cv2.imshow('threshold',binary)
-cv2.imshow('closed', closed)
+cv2.imshow('closed', cerradoimagen)
 cv2.imshow('resized', resized)
 #cv2.imshow('erode', erode)
 #cv2.imshow('dilate', dilate)
