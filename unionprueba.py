@@ -25,7 +25,6 @@ imagen = cv2.imread("./test/00465.jpg")  # Funciona ceda
 imagen = cv2.imread("./test/00481.jpg")  # Funciona peligro
 
 imagen = cv2.imread("./test/00567.jpg")  # Funciona medio peligro y prohibido
-imagen = cv2.imread("./test/00482.jpg")  # Funciona prohibido
 
 
 imagen = cv2.imread("./test/00548.jpg")  # Funciona stop 3 no
@@ -37,7 +36,8 @@ imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro
 imagen = cv2.imread("./test/00507.jpg")  # Funciona peligro con cachito
 imagen = cv2.imread("./test/00455.jpg")  # Funciona medio peligro nada
 imagen = cv2.imread("./test/00446.jpg")  # Funciona prohibido ok
-imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido no lo saca, pero deberia, asique por que
+imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido ok esta es la rectangular
+imagen = cv2.imread("./test/00482.jpg")  # Funciona prohibido ok esta es la rectangular
 imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido ok
 
 
@@ -93,7 +93,8 @@ for con in contornos:
     
     
     '''
-    if (abs(distancia1 - distancia2) < 10 and distancia1>30):
+    #if (abs(distancia1 - distancia2) < 10 and distancia1>30):
+    if (abs(distancia1 - distancia2) < 30 and distancia1>25):
 
         cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
         cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
@@ -139,7 +140,7 @@ for con in contornos:
 
                 (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
                  auxiliarsumamascarapeligro) = correlarm_aplicarmascarasennal(redimensionado)
-
+                '''
                 print("auxiliarsumamascarastop")
                 print(auxiliarsumamascarastop)
 
@@ -147,7 +148,7 @@ for con in contornos:
                 print(auxiliarsumamascarapeligro)
 
                 print("auxiliarsumamascaraprohibido")
-                print(auxiliarsumamascaraprohibido)
+                print(auxiliarsumamascaraprohibido)'''
 
                 if auxiliarsumamascarastop[2]>auxiliarsumamascarapeligro[2] and auxiliarsumamascarastop[2]>auxiliarsumamascaraprohibido[2]:
                     print("stop")
