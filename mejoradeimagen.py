@@ -38,8 +38,8 @@ def hacedordeMSER(imagenColor):
     return salidaMSER
 
 
-
+'''
 def calculodistanciasvector(val1,val2,val3,val4):
-    return math.sqrt(math.pow((val1-val2),2)+math.pow((val3-val4),2))
+    return math.sqrt(math.pow((val1-val2),2)+math.pow((val3-val4),2))'''
 
 
