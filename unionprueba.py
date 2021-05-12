@@ -26,18 +26,33 @@ imagen = cv2.imread("./test/00481.jpg")  # Funciona peligro
 
 imagen = cv2.imread("./test/00567.jpg")  # Funciona medio peligro y prohibido
 imagen = cv2.imread("./test/00482.jpg")  # Funciona prohibido
-imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido
-imagen = cv2.imread("./test/00446.jpg")  # Funciona prohibido
-imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido
-imagen = cv2.imread("./test/00455.jpg")  # Funciona medio peligro
-imagen = cv2.imread("./test/00507.jpg")  # Funciona peligro con cachito
+
+
+imagen = cv2.imread("./test/00548.jpg")  # Funciona stop 3 no
+imagen = cv2.imread("./test/00434.jpg")  # Funciona ok
+imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido ok
+imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR) #Las dos señales de stop juntas no se muestra
+imagen = cv2.imread("./train/00023.ppm")  # peligro error prohibido bien si arreglamos 0078 seguro se soliciona
 imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro
-imagen = cv2.imread("./train/00023.ppm")  # peligro error pq llega a posicion negativa
-imagen = cv2.imread("./test/00548.jpg")  # Funciona stop
-imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR)
-imagen = cv2.imread("./test/00434.jpg")  # Funciona
-imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido
-imagen = cv2.imread("./train/00078.ppm")  # Funciona prohibido
+imagen = cv2.imread("./test/00507.jpg")  # Funciona peligro con cachito
+imagen = cv2.imread("./test/00455.jpg")  # Funciona medio peligro nada
+imagen = cv2.imread("./test/00446.jpg")  # Funciona prohibido ok
+imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido no lo saca, pero deberia, asique por que
+imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido ok
+
+
+''''Los trinagulos los tuerce pqqqqq'''
+
+
+
+
+
+#imagen = cv2.imread("./train/00078.ppm")  # Funciona peligro
+
+
+
+
+
 
 '''
 arraymascarastop=arraymaskstop
@@ -70,7 +85,15 @@ for con in contornos:
 
     distancia1 = rect[1][0]
     distancia2 = rect[1][1]
-    if (abs(distancia1 - distancia2) < 10 and distancia1>15):
+
+    '''Hay que convertir la variable de inclinacion de res a 0
+    tomando los puntos mas anchos 
+    
+    
+    
+    
+    '''
+    if (abs(distancia1 - distancia2) < 10 and distancia1>30):
 
         cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
         cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
@@ -133,6 +156,9 @@ for con in contornos:
                 if auxiliarsumamascaraprohibido[2]>auxiliarsumamascarapeligro[2] and auxiliarsumamascaraprohibido[2]>auxiliarsumamascarastop[2]:
                     print("prohibido")
 
+                cv2.imshow('redimensionado', redimensionado)
+
+                cv2.imshow('aux', aux)
 '''
 
 en la salida gt.txt 00027.ppm;969;386;1024;441;2 son cinco valores, con que se corresponden
@@ -150,9 +176,7 @@ cv2.imshow('original', imagen)
 cv2.imshow('res', res)
 cv2.imshow('res2', res2)
 cv2.imshow('canny', cannybordes)
-cv2.imshow('redimensionado', redimensionado)
 cv2.imshow('salidadelmser', salMSER)
-cv2.imshow('aux', aux)
 cv2.waitKey(0)
 
 '''
