@@ -34,10 +34,10 @@ imagen = cv2.imread("./test/00507.jpg")  # Funciona peligro con cachito
 imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro
 imagen = cv2.imread("./train/00023.ppm")  # peligro error pq llega a posicion negativa
 imagen = cv2.imread("./test/00548.jpg")  # Funciona stop
-imagen = cv2.imread("./train/00078.ppm")  # Funciona prohibido
 imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR)
 imagen = cv2.imread("./test/00434.jpg")  # Funciona
 imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido
+imagen = cv2.imread("./train/00078.ppm")  # Funciona prohibido
 
 '''
 arraymascarastop=arraymaskstop
@@ -70,7 +70,7 @@ for con in contornos:
 
     distancia1 = rect[1][0]
     distancia2 = rect[1][1]
-    if (abs(distancia1 - distancia2) < 5):
+    if (abs(distancia1 - distancia2) < 10 and distancia1>15):
 
         cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
         cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
