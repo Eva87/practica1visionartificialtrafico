@@ -80,16 +80,6 @@ for con in contours:
     rect = cv2.minAreaRect(con)
     box = np.int0(cv2.boxPoints(rect))
 
-    '''
-    
-
-Hay que guardar la imagen recortada para seguir trabajando con ella recortada?
-
-
-
-la mascara de 25*25 es mejor con 1 o con 255
-
-    '''
 
     cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
     print([box])

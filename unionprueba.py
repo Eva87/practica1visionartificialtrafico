@@ -22,25 +22,33 @@ imagen = cv2.imread("./train_recortadas/21/00001.ppm")  # Falla
 
 imagen = cv2.imread("./test/00434.jpg")  # Funciona prohibido
 imagen = cv2.imread("./test/00465.jpg")  # Funciona ceda
-imagen = cv2.imread("./test/00481.jpg")  # Funciona peligro
-
-imagen = cv2.imread("./test/00567.jpg")  # Funciona medio peligro y prohibido
 
 
-imagen = cv2.imread("./test/00548.jpg")  # Funciona stop 3 no
-imagen = cv2.imread("./test/00434.jpg")  # Funciona ok
-imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido ok
+
 imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR) #Las dos señales de stop juntas no se muestra
-imagen = cv2.imread("./train/00023.ppm")  # peligro error prohibido bien si arreglamos 0078 seguro se soliciona
-imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro
-imagen = cv2.imread("./test/00507.jpg")  # Funciona peligro con cachito
 imagen = cv2.imread("./test/00455.jpg")  # Funciona medio peligro nada
-imagen = cv2.imread("./test/00446.jpg")  # Funciona prohibido ok
 imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido ok esta es la rectangular
+imagen = cv2.imread("./test/00548.jpg")  # Funciona stop 3 no
+imagen = cv2.imread("./test/00567.jpg")  # Funciona medio peligro y prohibido
+imagen = cv2.imread("./test/00507.jpg")  # Funciona peligro con cachito
+imagen = cv2.imread("./test/00481.jpg")  # Funciona peligro
+imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro
+imagen = cv2.imread("./train/00023.ppm")  # peligro error prohibido bien si arreglamos 0078 seguro se soliciona
 imagen = cv2.imread("./test/00482.jpg")  # Funciona prohibido ok esta es la rectangular
+imagen = cv2.imread("./test/00434.jpg")  # Funciona ok es prohibido y pone peligro
 imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido ok
+imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido ok
+imagen = cv2.imread("./test/00446.jpg")  # Funciona prohibido ok
 
 
+
+
+
+
+'''
+imagen = cv2.imread("./test/00444.jpg")
+imagen = cv2.imread("./test/00445.jpg")
+'''
 ''''Los trinagulos los tuerce pqqqqq'''
 
 
@@ -93,8 +101,8 @@ for con in contornos:
     
     
     '''
-    #if (abs(distancia1 - distancia2) < 10 and distancia1>30):
-    if (abs(distancia1 - distancia2) < 30 and distancia1>25):
+    if (abs(distancia1 - distancia2) < 10 and distancia1>25):
+    #if (abs(distancia1 - distancia2) < 30 and distancia1>25):
 
         cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
         cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
@@ -139,23 +147,34 @@ for con in contornos:
                 '''Ahora la imagen en byn'''
 
                 (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
-                 auxiliarsumamascarapeligro) = correlarm_aplicarmascarasennal(redimensionado)
-                '''
+                 auxiliarsumamascarapeligro,auxiliarsumamascarapeligro45) = correlarm_aplicarmascarasennal(redimensionado)
+
                 print("auxiliarsumamascarastop")
                 print(auxiliarsumamascarastop)
 
                 print("auxiliarsumamascarapeligro")
                 print(auxiliarsumamascarapeligro)
+                print("auxiliarsumamascarapeligro45")
+                print(auxiliarsumamascarapeligro45)
 
                 print("auxiliarsumamascaraprohibido")
-                print(auxiliarsumamascaraprohibido)'''
-
-                if auxiliarsumamascarastop[2]>auxiliarsumamascarapeligro[2] and auxiliarsumamascarastop[2]>auxiliarsumamascaraprohibido[2]:
+                print(auxiliarsumamascaraprohibido)
+                '''
+                #Si es rgb
+                if auxiliarsumamascarastop[0]>auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0]>auxiliarsumamascaraprohibido[0] and  auxiliarsumamascarastop[0]>auxiliarsumamascarapeligro45[0]:
                     print("stop")
-                if auxiliarsumamascarapeligro[2]>auxiliarsumamascarastop[2] and auxiliarsumamascarapeligro[2]>auxiliarsumamascaraprohibido[2]:
-                    print("peligro")
-                if auxiliarsumamascaraprohibido[2]>auxiliarsumamascarapeligro[2] and auxiliarsumamascaraprohibido[2]>auxiliarsumamascarastop[2]:
+                elif auxiliarsumamascaraprohibido[0]>auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0]>auxiliarsumamascarapeligro45[0] and auxiliarsumamascaraprohibido[0]>auxiliarsumamascarastop[0]:
                     print("prohibido")
+                elif (auxiliarsumamascarapeligro[0]>auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0]>auxiliarsumamascaraprohibido[0]) or (auxiliarsumamascarapeligro45[0]>auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro45[0]>auxiliarsumamascaraprohibido[0]):
+                    print("peligro")
+                    '''
+                #si es bgr
+                if auxiliarsumamascarastop[2]>auxiliarsumamascarapeligro[2] and auxiliarsumamascarastop[2]>auxiliarsumamascaraprohibido[2] and  auxiliarsumamascarastop[2]>auxiliarsumamascarapeligro45[2]:
+                    print("stop")
+                elif auxiliarsumamascaraprohibido[2]>auxiliarsumamascarapeligro[2] and auxiliarsumamascaraprohibido[2]>auxiliarsumamascarapeligro45[2] and auxiliarsumamascaraprohibido[2]>auxiliarsumamascarastop[2]:
+                    print("prohibido")
+                elif (auxiliarsumamascarapeligro[2]>auxiliarsumamascarastop[2] and auxiliarsumamascarapeligro[2]>auxiliarsumamascaraprohibido[2]) or (auxiliarsumamascarapeligro45[2]>auxiliarsumamascarastop[2] and auxiliarsumamascarapeligro45[2]>auxiliarsumamascaraprohibido[2]):
+                    print("peligro")
 
                 cv2.imshow('redimensionado', redimensionado)
 
@@ -172,6 +191,16 @@ como usar el main.py
 
 
 '''
+'''
+    
+
+Hay que guardar la imagen recortada para seguir trabajando con ella recortada?
+
+imagen es RGB pq funciona mejor si lo trato como BGR
+
+la mascara de 25*25 es mejor con 1 o con 255
+
+    '''
 
 cv2.imshow('original', imagen)
 cv2.imshow('res', res)
