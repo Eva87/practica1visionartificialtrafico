@@ -147,7 +147,7 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin)
                     variablesennal=4
                     if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > auxiliarsumamascaraprohibido[0] and auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro45[0]:
                         print("stop rgb")
-                        variablesennal =0
+                        variablesennal =3
                     elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro45[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarastop[0]:
                         print("prohibido rgb")
                         variablesennal =1
@@ -155,7 +155,7 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin)
                         print("peligro rgb")
                         variablesennal =2
                     else:
-                        variablesennal =3
+                        variablesennal =0
 
                     '''# si es bgr
                     if auxiliarsumamascarastop[2] > auxiliarsumamascarapeligro[2] and auxiliarsumamascarastop[2] > \

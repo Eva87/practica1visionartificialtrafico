@@ -165,12 +165,38 @@ def correlarm_aplicarmascarasennal(imagenentrada):
 	auxiliararraymaskprohibido = 0
 	auxiliarsumamaskpeligro = 0
 	auxiliarsumamaskpeligro45 = 0
+	scorestop=0
+	scoreprohibido=0
+	scorepeligro=0
+	scorepeligro45=0
+	auxmultistop=0
+	auxmultiprohibido=0
+	auxmultipeligro=0
+	auxmultipeligro45=0
 	for i in range(25):
 		for j in range(25):
-			auxiliarsumamaskstop = auxiliarsumamaskstop + (arraymaskstop[i, j] * imagenentrada[i, j])
-			auxiliararraymaskprohibido = auxiliararraymaskprohibido + (arraymaskprohibido[i, j] * imagenentrada[i, j])
-			auxiliarsumamaskpeligro = auxiliarsumamaskpeligro + (arraymaskpeligro[i, j] * imagenentrada[i, j])
-			auxiliarsumamaskpeligro45 = auxiliarsumamaskpeligro45 + (arraymaskpeligro45[i, j] * imagenentrada[i, j])
+			auxmultistop=arraymaskstop[i, j] * imagenentrada[i, j]
+			auxmultiprohibido=arraymaskprohibido[i, j] * imagenentrada[i, j]
+			auxmultipeligro=arraymaskpeligro[i, j] * imagenentrada[i, j]
+			auxmultipeligro45=arraymaskpeligro45[i, j] * imagenentrada[i, j]
+			auxiliarsumamaskstop = auxiliarsumamaskstop + (auxmultistop)
+			auxiliararraymaskprohibido = auxiliararraymaskprohibido + (auxmultiprohibido)
+			auxiliarsumamaskpeligro = auxiliarsumamaskpeligro + (auxmultipeligro)
+			auxiliarsumamaskpeligro45 = auxiliarsumamaskpeligro45 + (auxmultipeligro45)
+			if(auxmultistop[2]>128):
+				scorestop=scorestop+1
+			if(auxmultiprohibido[2]>96):
+				scoreprohibido=scoreprohibido+1
+			if(auxmultipeligro[2]>96):
+				scorepeligro=scorepeligro+1
+			if(auxmultipeligro45[2]>96):
+				scorepeligro45=scorepeligro45+1
+	print()
+	print()
+	print("scorestop  "+str(scorestop))
+	print("scoreprohibido  "+str(scoreprohibido))
+	print("scorepeligro  "+str(scorepeligro))
+	print("scorepeligro45  "+str(scorepeligro45))
 	return (auxiliarsumamaskstop,auxiliararraymaskprohibido,auxiliarsumamaskpeligro,auxiliarsumamaskpeligro45)
 
 

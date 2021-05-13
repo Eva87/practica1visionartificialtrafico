@@ -19,6 +19,27 @@ cv2.imshow('conContraste',contrast_img)
 cv2.imshow('COriginal',cannyImagen2)
 
 '''
+'''
+seguro que se puede meter algo de esto
+
+
+
+img_med = cv2.adaptiveThreshold(imagenclarabyn,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,21,15)
+img_gauss = cv2.adaptiveThreshold(imagenclarabyn,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,21,15)
+cv2.imshow('mask', mask)
+blurred = cv2.blur(mask, (9, 9))
+cv2.imshow('blurred', blurred)
+ret, binary = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY)
+cv2.imshow('blurred binary', binary)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
+closed = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
+cv2.imshow('closed', closed)
+erode = cv2.erode(closed, None, iterations=4)
+cv2.imshow('erode', erode)
+dilate = cv2.dilate(erode, None, iterations=4)
+cv2.imshow('dilate', dilate)
+
+'''
 
 
 contrast_img = cv2.addWeighted(imagen, 2.5, np.zeros(imagen.shape, imagen.dtype), 0, 0)

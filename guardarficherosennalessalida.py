@@ -1,6 +1,8 @@
 
 import os
 import io
+from datetime import date, datetime
+
 import cv2
 
 def guardarcarpetasyfichero(p1,p2,p3,p4,sennal):
@@ -18,13 +20,15 @@ def guardarimagencarpeta(imagensalida,variablesenl):
     '''Aqui hay que hacer que se llame segun el fichero de entrada'''
     '''Quizas ponerlo en una carpeta distinta para cada uno'''
 
-    if variablesenl==0:
-        cv2.imwrite ("stop.jpg" , imagensalida)
+    cadenasalidaimagen=str(datetime.now().strftime("%d%m%Y%H%M%S%f"))
+    if variablesenl==3:
+        cadenasalidaimagen="./prohibido/prohibido"+cadenasalidaimagen+".jpg"
     elif variablesenl==1:
-        cv2.imwrite ("prohibido.jpg" , imagensalida)
+        cadenasalidaimagen="./prohibido/prohibido"+cadenasalidaimagen+".jpg"
     elif variablesenl==2:
-        cv2.imwrite ("peligro.jpg" , imagensalida)
+        cadenasalidaimagen="./peligro/peligro"+cadenasalidaimagen+".jpg"
     else:
-        cv2.imwrite ("otros.jpg" , imagensalida)
+        cadenasalidaimagen="./otros/otros"+cadenasalidaimagen+".jpg"
 
+    cv2.imwrite(cadenasalidaimagen, imagensalida)
     return

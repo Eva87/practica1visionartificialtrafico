@@ -30,6 +30,11 @@ imagen = cv2.imread("./test/00411.jpg")  # bien rgb
 imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro bien en rgb ceda reconoce peligro en rgb
 imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido ok bien rgb
 
+imagen = cv2.imread("./20201003121440748.jpg")
+
+
+
+
 '''
 imagen = cv2.imread("./test/00409.jpg")  # No tiene señales
 imagen = cv2.imread("./test/00407.jpg")  #no tiene señales
