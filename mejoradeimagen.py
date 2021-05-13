@@ -7,8 +7,7 @@ from colorsys import hsv_to_rgb
 
 from guardarficherosennalessalida import *
 from mascarasdelasformasdelassennales import *
-
-def filtradorojoDifuminarNucleoCerradoCanny(imagenHSV):
+def mascararojo (imagenHSV):
     rojo_bajo = np.array([0, 80, 40])
     rojo_alto = np.array([10, 255, 255])
     rojo_bajo2 = np.array([160, 50, 45])
@@ -20,8 +19,13 @@ def filtradorojoDifuminarNucleoCerradoCanny(imagenHSV):
     blurdifuminarrojo = cv2.blur(mascaraFinal, (9, 9))
 
     retderecho, binario = cv2.threshold(blurdifuminarrojo, 127, 255, cv2.THRESH_BINARY)
+
+    return retderecho,binario
+
+def filtradorojoDifuminarNucleoCerradoCanny(entimagenHSV):
+    retdere,binary=mascararojo(entimagenHSV)
     nucleo = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
-    cerradoimag = cv2.morphologyEx(binario, cv2.MORPH_CLOSE, nucleo)
+    cerradoimag = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, nucleo)
     cannybord = cv2.Canny(cerradoimag, 200, 300)
     return (cannybord,cerradoimag)
 
@@ -78,13 +82,38 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin)
                     dim = (25, 25)
                     redimensionado = cv2.resize(aux, dim, interpolation=cv2.INTER_AREA)
 
+                    #redimensionado=mascararojo(redimensionado)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    cv2.imshow('redimensionado', redimensionado)
+
                     '''Ahora la imagen en byn'''
 
                     (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
                      auxiliarsumamascarapeligro, auxiliarsumamascarapeligro45) = correlarm_aplicarmascarasennal(
                         redimensionado)
 
-                    print("auxiliarsumamascarastop")
+
+                    '''   print("auxiliarsumamascarastop")
                     print(auxiliarsumamascarastop)
 
                     print("auxiliarsumamascarapeligro")
@@ -93,32 +122,42 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin)
                     print(auxiliarsumamascarapeligro45)
 
                     print("auxiliarsumamascaraprohibido")
-                    print(auxiliarsumamascaraprohibido)
+                    print(auxiliarsumamascaraprohibido)'''
                     # Aqui comparamos la imagen redimensionada con las mascaras que tenemos de las señales
                     # Y lo guardamos en una variable segun su situacion y señal que es
                     # Tambien guardaremos la imagen en una carpeta o en 3 carpetas una para cada señal
                     # Si es rgb
+
+                    '''
                     variablesennal=4
-                    if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > \
-                            auxiliarsumamascaraprohibido[0] and auxiliarsumamascarastop[0] > \
-                            auxiliarsumamascarapeligro45[0]:
+                    if auxiliarsumamascarastop > auxiliarsumamascarapeligro and auxiliarsumamascarastop > auxiliarsumamascaraprohibido and auxiliarsumamascarastop > auxiliarsumamascarapeligro45:
                         print("stop rgb")
                         variablesennal =0
-                    elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and \
-                            auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro45[0] and \
-                            auxiliarsumamascaraprohibido[0] > auxiliarsumamascarastop[0]:
+                    elif auxiliarsumamascaraprohibido > auxiliarsumamascarapeligro and auxiliarsumamascaraprohibido > auxiliarsumamascarapeligro45 and auxiliarsumamascaraprohibido > auxiliarsumamascarastop:
                         print("prohibido rgb")
                         variablesennal =1
-                    elif (auxiliarsumamascarapeligro[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0] >
-                          auxiliarsumamascaraprohibido[0]) or (
-                            auxiliarsumamascarapeligro45[0] > auxiliarsumamascarastop[0] and
-                            auxiliarsumamascarapeligro45[0] > auxiliarsumamascaraprohibido[0]):
+                    elif (auxiliarsumamascarapeligro > auxiliarsumamascarastop and auxiliarsumamascarapeligro > auxiliarsumamascaraprohibido) or (auxiliarsumamascarapeligro45 > auxiliarsumamascarastop and auxiliarsumamascarapeligro45> auxiliarsumamascaraprohibido):
+                        print("peligro rgb")
+                        variablesennal =2
+                    else:
+                        print("stop2 rgb")
+                        variablesennal =3
+                    '''
+                    
+                    variablesennal=4
+                    if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > auxiliarsumamascaraprohibido[0] and auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro45[0]:
+                        print("stop rgb")
+                        variablesennal =0
+                    elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro45[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarastop[0]:
+                        print("prohibido rgb")
+                        variablesennal =1
+                    elif (auxiliarsumamascarapeligro[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0] > auxiliarsumamascaraprohibido[0]) or (auxiliarsumamascarapeligro45[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro45[0] > auxiliarsumamascaraprohibido[0]):
                         print("peligro rgb")
                         variablesennal =2
                     else:
                         variablesennal =3
 
-                    # si es bgr
+                    '''# si es bgr
                     if auxiliarsumamascarastop[2] > auxiliarsumamascarapeligro[2] and auxiliarsumamascarastop[2] > \
                             auxiliarsumamascaraprohibido[2] and auxiliarsumamascarastop[2] > \
                             auxiliarsumamascarapeligro45[2]:
@@ -131,9 +170,9 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin)
                           auxiliarsumamascaraprohibido[2]) or (
                             auxiliarsumamascarapeligro45[2] > auxiliarsumamascarastop[2] and
                             auxiliarsumamascarapeligro45[2] > auxiliarsumamascaraprohibido[2]):
-                        print("peligro bgr")
-                    '''guardarcarpetasyfichero(h1,h2,l1,l2,variablesennal)
-                    guardarimagencarpeta(redimensionado,variablesennal)'''
+                        print("peligro bgr")'''
+                    guardarcarpetasyfichero(h1,h2,l1,l2,variablesennal)
+                    guardarimagencarpeta(redimensionado,variablesennal)
 
     cv2.imshow('res', res)
     cv2.imshow('res2', res2)

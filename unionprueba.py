@@ -14,21 +14,21 @@ imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido ok bien ambas
 imagen = cv2.imread("./train/00013.ppm")  # Funciona prohibido ok bien ambas
 imagen = cv2.imread("./test/00507.jpg")  # Funciona peligro con cachito bien ambas
 imagen = cv2.imread("./test/00548.jpg")  # Funciona stop 3  ambas
-imagen = cv2.imread("./test/00428.jpg")  #
 imagen = cv2.imread("./test/00446.jpg")  # Funciona prohibido ok 1 bien 1 mal ambas
+imagen = cv2.imread("./test/00428.jpg")  #
 
-'''
+
 imagen = cv2.imread("./test/00434.jpg")  # Funciona ok es prohibido y pone peligro mal ambas
 imagen = cv2.imread("./train/00023.ppm")  # peligro no coge peligro mal ambas
 imagen = cv2.imread("./test/00481.jpg")  # Funciona peligro no ambas
 imagen = cv2.imread("./test/00431.jpg")  #
 imagen = cv2.imread("./test/00434.jpg")  # Funciona prohibido mal ambos
 imagen = cv2.imread("./test/00423.jpg")  #
-imagen = cv2.imread("./train/00078.ppm")  # Funciona peligro bien rgb
+imagen = cv2.imread("./train/00078.ppm")  # Funciona peligro
 
-imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido ok bien rgb
 imagen = cv2.imread("./test/00411.jpg")  # bien rgb
-imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro bien en rgb ceda reconoce peligro en rgb'''
+imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro bien en rgb ceda reconoce peligro en rgb
+imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido ok bien rgb
 
 '''
 imagen = cv2.imread("./test/00409.jpg")  # No tiene señales
