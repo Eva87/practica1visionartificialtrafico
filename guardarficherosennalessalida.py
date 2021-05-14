@@ -15,20 +15,20 @@ def guardarcarpetasyfichero(p1,p2,p3,p4,sennal):
 
     return ()
 
-def guardarimagencarpeta(imagensalida,variablesenl):
+def guardarimagencarpeta(imagensalida,variablesenl,orig):
     #0 stop 1 prohibido 2 peligro # otros
     '''Aqui hay que hacer que se llame segun el fichero de entrada'''
     '''Quizas ponerlo en una carpeta distinta para cada uno'''
 
     cadenasalidaimagen=str(datetime.now().strftime("%d%m%Y%H%M%S%f"))
     if variablesenl==3:
-        cadenasalidaimagen="./prohibido/prohibido"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./prohibido/"+orig+"prohibido"+cadenasalidaimagen+".jpg"
     elif variablesenl==1:
-        cadenasalidaimagen="./prohibido/prohibido"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./prohibido/"+orig+"prohibido"+cadenasalidaimagen+".jpg"
     elif variablesenl==2:
-        cadenasalidaimagen="./peligro/peligro"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./peligro/"+orig+"peligro"+cadenasalidaimagen+".jpg"
     else:
-        cadenasalidaimagen="./otros/otros"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./otros/"+orig+"otros"+cadenasalidaimagen+".jpg"
 
     cv2.imwrite(cadenasalidaimagen, imagensalida)
     return

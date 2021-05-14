@@ -94,7 +94,7 @@ if len(contornos) > 0:
     result = salMSER.copy()
     result2 = imagen.copy()
 
-    hacedorDeCachitosYMascaraSennales(contornos, result, result2, imagen)
+    hacedorDeCachitosYMascaraSennales(contornos, result, result2, imagen, "alternativa2")
 
 
 

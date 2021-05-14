@@ -35,7 +35,7 @@ image = cv2.findContours(cerradoimagen.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPR
 
 if len(contornos) > 0:
     result2 = imagen.copy()
-    hacedorDeCachitosYMascaraSennales(contornos, result2, result2, imagen)
+    hacedorDeCachitosYMascaraSennales(contornos, result2, result2, imagen, "alternativa")
 
 
 

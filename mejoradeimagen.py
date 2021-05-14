@@ -44,7 +44,7 @@ def hacedordeMSER(imagenColor):
 
     return salidaMSER
 
-def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin):
+def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin,originario):
     i = 0
     imagenvariableretornoposiciones=None
     variableretornoposiciones=None
@@ -55,8 +55,7 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin)
         distancia1 = rect[1][0]
         distancia2 = rect[1][1]
 
-        if (abs(distancia1 - distancia2) < 15 and distancia1 > 25):
-        #if (abs(distancia1 - distancia2) < 30 and distancia1>25):
+        if (abs(distancia1 - distancia2) < 30 and distancia1>25):
 
             cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
             cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
@@ -172,7 +171,7 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin)
                             auxiliarsumamascarapeligro45[2] > auxiliarsumamascaraprohibido[2]):
                         print("peligro bgr")'''
                     guardarcarpetasyfichero(h1,h2,l1,l2,variablesennal)
-                    guardarimagencarpeta(redimensionado,variablesennal)
+                    guardarimagencarpeta(redimensionado,variablesennal,originario)
 
     cv2.imshow('res', res)
     cv2.imshow('res2', res2)
