@@ -22,7 +22,7 @@ def guardarimagencarpeta(imagensalida,variablesenl,orig):
 
     cadenasalidaimagen=str(datetime.now().strftime("%d%m%Y%H%M%S%f"))
     if variablesenl==3:
-        cadenasalidaimagen="./prohibido/"+orig+"prohibido"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./stop/"+orig+"stop"+cadenasalidaimagen+".jpg"
     elif variablesenl==1:
         cadenasalidaimagen="./prohibido/"+orig+"prohibido"+cadenasalidaimagen+".jpg"
     elif variablesenl==2:

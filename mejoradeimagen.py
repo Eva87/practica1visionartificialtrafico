@@ -6,7 +6,7 @@ from random import random
 from colorsys import hsv_to_rgb
 
 from guardarficherosennalessalida import *
-from mascarasdelasformasdelassennales import *
+from signalMask import *
 def mascararojo (imagenHSV):
     rojo_bajo = np.array([0, 80, 40])
     rojo_alto = np.array([10, 255, 255])
@@ -33,10 +33,13 @@ def filtradorojoDifuminarNucleoCerradoCanny(entimagenHSV):
 def hacedordeMSER(imagenColor):
     # imagen oscura 20 y imagen clara 100
     imageUint8 = ((imagenColor > 100) * 255).astype(np.uint8)
+    cv2.imshow("uni8",imageUint8)
     # MSER
     arrayCeros = np.zeros((imageUint8.shape[0], imageUint8.shape[1], 3), dtype=np.uint8)
     mser = cv2.MSER_create(_delta=5, _max_variation=0.5, _max_area=20000)
     polygons = mser.detectRegions(imageUint8)
+    if len(polygons)==0:
+        return None
     for polygon in polygons[0]:
         colorRGB = hsv_to_rgb(random(), 1, 1)
         colorRGB = tuple(int(color * 255) for color in colorRGB)
@@ -44,7 +47,7 @@ def hacedordeMSER(imagenColor):
 
     return salidaMSER
 
-def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin,originario):
+def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario):
     i = 0
     imagenvariableretornoposiciones=None
     variableretornoposiciones=None
@@ -55,7 +58,7 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin,
         distancia1 = rect[1][0]
         distancia2 = rect[1][1]
 
-        if (abs(distancia1 - distancia2) < 30 and distancia1>25):
+        if (abs(distancia1 - distancia2) < 30 and distancia1>15):
 
             cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
             cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
@@ -108,7 +111,7 @@ def hacedorDeCachitosYMascaraSennales(contornosimagenentrada,res,res2,imgorigin,
                     '''Ahora la imagen en byn'''
 
                     (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
-                     auxiliarsumamascarapeligro, auxiliarsumamascarapeligro45) = correlarm_aplicarmascarasennal(
+                     auxiliarsumamascarapeligro, auxiliarsumamascarapeligro45) = correlarMascara(
                         redimensionado)
 
 

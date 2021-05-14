@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from random import random
 from colorsys import hsv_to_rgb
 import sys
-from mascarasdelasformasdelassennales import *
+from signalMask import *
 from mejoradeimagen import *
 
 imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR) #Las dos señales de stop juntas no se muestra
@@ -29,11 +29,10 @@ imagen = cv2.imread("./train/00078.ppm")  # Funciona peligro
 imagen = cv2.imread("./test/00411.jpg")  # bien rgb
 imagen = cv2.imread("./test/00557.jpg")  # Funciona ceda y peligro bien en rgb ceda reconoce peligro en rgb
 imagen = cv2.imread("./test/00411.jpg")  # Funciona prohibido ok bien rgb
-
+imagen = cv2.imread("./test/00433.jpg")
+imagen = cv2.imread("./test/00431.jpg")
 imagen = cv2.imread("./20201003121440748.jpg")
-
-
-
+imagen = cv2.imread("./train_10_ejemplos/00003.ppm")
 
 '''
 imagen = cv2.imread("./test/00409.jpg")  # No tiene señales
@@ -55,8 +54,6 @@ imagen = cv2.imread("./test/00482.jpg")  # Funciona prohibido ok esta es la rect
 imagen = cv2.imread("./test/00418.jpg")  # dos señales, no distingue a 15 si bien
 imagen = cv2.imread("./test/00465.jpg")  # Funciona ceda lo pilla con 12 pero mal
 '''
-
-
 
 '''
 imagen = cv2.imread("./test/00422.jpg")  #
@@ -81,6 +78,8 @@ imagen = cv2.imread("./test/00421.jpg")  #
 '''
 
 
+
+
 imagenescalagrises = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
 imagenhsv = cv2.cvtColor(imagen, cv2.COLOR_BGR2HSV)
 
@@ -94,7 +93,7 @@ if len(contornos) > 0:
     result = salMSER.copy()
     result2 = imagen.copy()
 
-    hacedorDeCachitosYMascaraSennales(contornos, result, result2, imagen, "alternativa2")
+    recorteCorrelarSignals(contornos, result, result2, imagen, "alternativa2")
 
 
 
