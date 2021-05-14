@@ -1,6 +1,4 @@
-import cv2
-import numpy as np
-from signalMask import *
+#Proyecto creado por Eva María Hoyo de la Cruz, TongTong Xu y Antonio Francisco Roldan Martín
 from mejoradeimagen import *
 imagenH = cv2.imread("./train/00141.ppm",cv2.IMREAD_GRAYSCALE)
 imagen = cv2.imread("./test/00482.jpg", cv2.IMREAD_COLOR)
@@ -27,10 +25,7 @@ imagen = cv2.imread("./train_10_ejemplos/00003.ppm")
 #contrast_img = cv2.addWeighted(imagen, 2.5, np.zeros(imagen.shape, imagen.dtype), 0, 0)
 imagenhsv = cv2.cvtColor(imagen, cv2.COLOR_BGR2HSV)
 
-
 (cannybordes, cerradoimagen)=filtradorojoDifuminarNucleoCerradoCanny(imagenhsv)
-
-
 
 contornos, hierarchy = cv2.findContours(cerradoimagen.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 image = cv2.findContours(cerradoimagen.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -40,9 +35,4 @@ if len(contornos) > 0:
     recorteCorrelarSignals(contornos, result2, result2, imagen, "alternativa")
 
 
-cv2.imshow('hsv', imagenhsv)
-cv2.imshow('closed', cerradoimagen)
-#cv2.imshow('erode', erode)
-#cv2.imshow('dilate', dilate)
-cv2.waitKey(0)
 

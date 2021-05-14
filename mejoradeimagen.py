@@ -1,6 +1,4 @@
-import math
-
-import numpy as np
+#Proyecto creado por Eva María Hoyo de la Cruz, TongTong Xu y Antonio Francisco Roldan Martín
 import cv2
 from random import random
 from colorsys import hsv_to_rgb
@@ -15,11 +13,8 @@ def mascararojo (imagenHSV):
     mascara1 = cv2.inRange(imagenHSV, rojo_bajo, rojo_alto)
     mascara2 = cv2.inRange(imagenHSV, rojo_bajo2, rojo_alto2)
     mascaraFinal = cv2.add(mascara1, mascara2)
-
     blurdifuminarrojo = cv2.blur(mascaraFinal, (9, 9))
-
     retderecho, binario = cv2.threshold(blurdifuminarrojo, 127, 255, cv2.THRESH_BINARY)
-
     return retderecho,binario
 
 def filtradorojoDifuminarNucleoCerradoCanny(entimagenHSV):
@@ -33,18 +28,15 @@ def filtradorojoDifuminarNucleoCerradoCanny(entimagenHSV):
 def hacedordeMSER(imagenColor):
     # imagen oscura 20 y imagen clara 100
     imageUint8 = ((imagenColor > 100) * 255).astype(np.uint8)
-    cv2.imshow("uni8",imageUint8)
     # MSER
     arrayCeros = np.zeros((imageUint8.shape[0], imageUint8.shape[1], 3), dtype=np.uint8)
     mser = cv2.MSER_create(_delta=5, _max_variation=0.5, _max_area=20000)
     polygons = mser.detectRegions(imageUint8)
-    if len(polygons)==0:
-        return None
+    salidaMSER=None
     for polygon in polygons[0]:
         colorRGB = hsv_to_rgb(random(), 1, 1)
         colorRGB = tuple(int(color * 255) for color in colorRGB)
         salidaMSER = cv2.fillPoly(arrayCeros, [polygon], colorRGB)
-
     return salidaMSER
 
 def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario):
@@ -54,11 +46,9 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario)
     for con in contornosimagenentrada:
         rect = cv2.minAreaRect(con)
         box = np.int0(cv2.boxPoints(rect))
-
         distancia1 = rect[1][0]
         distancia2 = rect[1][1]
-
-        if (abs(distancia1 - distancia2) < 30 and distancia1>15):
+        if (abs(distancia1 - distancia2) < 30 and distancia1>10):
 
             cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
             cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
@@ -84,7 +74,6 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario)
                     dim = (25, 25)
                     redimensionado = cv2.resize(aux, dim, interpolation=cv2.INTER_AREA)
 
-                    #redimensionado=mascararojo(redimensionado)
 
 
 
@@ -96,17 +85,6 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario)
 
 
 
-
-
-
-
-
-
-
-
-
-
-                    cv2.imshow('redimensionado', redimensionado)
 
                     '''Ahora la imagen en byn'''
 
@@ -115,7 +93,7 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario)
                         redimensionado)
 
 
-                    '''   print("auxiliarsumamascarastop")
+                    print("auxiliarsumamascarastop")
                     print(auxiliarsumamascarastop)
 
                     print("auxiliarsumamascarapeligro")
@@ -124,7 +102,7 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario)
                     print(auxiliarsumamascarapeligro45)
 
                     print("auxiliarsumamascaraprohibido")
-                    print(auxiliarsumamascaraprohibido)'''
+                    print(auxiliarsumamascaraprohibido)
                     # Aqui comparamos la imagen redimensionada con las mascaras que tenemos de las señales
                     # Y lo guardamos en una variable segun su situacion y señal que es
                     # Tambien guardaremos la imagen en una carpeta o en 3 carpetas una para cada señal
