@@ -1,10 +1,4 @@
-[16:28] José Miguel Buenaposada Biencinto
-    
-Comentario general: el main.py que os paso es para que se use desde la línea de comandos. Yo voy a usar ese script para ejecutar todas las prácticas y hacer la corrección. En cualquier caso, vosotros podéis desarrollar la práctica sin usar ese main.py que está pensado para llamarlo como "python main.py ...".  Sobre todo si estáis usando colab para trabajar en grupo. 
-​[16:29] José Miguel Buenaposada Biencinto
-    
-¿Cómo se debería trabajar en grupo en la práctica? Yo usaría colab para los experimentos "rápidos", veri si algo funciona o no, etc. Además el colab tiene de bueno que podéis trabajar todos a la vez en el mismo notebook (no hace falta que os paséis código por el chat)
-​[16:30] José Miguel Buenaposada Biencinto
-    
-Pero como cualquier otro proyecto de software, lo suyo es tener un repo de github (¡siempre privado!) y tener todas las versiones de la práctica buenas ahí (incluyendo ya el main.py ya ejecutable)
-<https://teams.microsoft.com/l/message/19:f185f4ae03dd48b782b63c30722a67b8@thread.tacv2/1618410495541?tenantId=5f84c4ea-370d-4b9e-830c-756f8bf1b51f&amp;groupId=8c997d47-27d1-4a79-8888-d9b1b4aaf4ba&amp;parentMessageId=1618391575353&amp;teamName=2020 - 2033 - VISION ARTIFICIAL - 4AT&amp;channelName=General&amp;createdTime=1618410495541>
+ el main.py que os paso es para que se use desde la línea de comandos. Yo voy a usar ese
+  script para ejecutar todas las prácticas y hacer la corrección. En cualquier caso, vosotros
+  podéis desarrollar la práctica sin usar ese main.py que está pensado para llamarlo como
+  "python main.py ...".
