@@ -196,82 +196,27 @@ def correlarMascara(imagenentrada):
 	scoreStop=0
 	scoreProhibido=0
 	scorePeligro=0
+	scoretodo=0
 	for i in range(25):
 		for j in range(25):
 			auxMultiStop= mascaraStop[i, j] * imagenentrada[i, j]
 			auxMultiProhibido= mascaraProhibido[i, j] * imagenentrada[i, j]
 			auxMultiPeligro= mascaraPeligro[i, j] * imagenentrada[i, j]
+			auxMultitodo= imagenentrada[i, j]*1
 			auxStop = auxStop + (auxMultiStop)
 			auxPeligro = auxPeligro + (auxMultiPeligro)
 			auxProhibido = auxProhibido + (auxMultiProhibido)
-			if(auxMultiStop[0]>130 and auxMultiStop[2]<100 and auxMultiStop[1]<100):
+			if auxMultiStop[0] > 130 and auxMultiStop[1] < 100 and auxMultiStop[2] < 100:
 				scoreStop=scoreStop+1
-			if(auxMultiProhibido[0]>130 and auxMultiStop[2]<100 and auxMultiStop[1]<100):
+			if auxMultiProhibido[0] > 130 and auxMultiStop[1] < 100 and auxMultiStop[2] < 100:
 				scoreProhibido=scoreProhibido+1
-			if(auxMultiPeligro[0]>130 and auxMultiStop[2]<100 and auxMultiStop[1]<100):
+			if auxMultiPeligro[0] > 130 and auxMultiStop[1] < 100 and auxMultiStop[2] < 100:
 				scorePeligro=scorePeligro+1
+			if auxMultitodo[0] > 90 and auxMultitodo[1] < 180 and auxMultitodo[2] < 180:
+				scoretodo=scoretodo+1
 
-			auxMultiStop = 0
-			auxMultiProhibido = 0
-			auxMultiPeligro = 0
-	print()
-	print()
-	print("scoreStop  "+str(scoreStop))
-	print("scoreProhibido  "+str(scoreProhibido))
-	print("scorePeligro  "+str(scorePeligro))
+	return (auxStop,auxProhibido,auxPeligro, scoreStop,scorePeligro,scoreProhibido,scoretodo)
 
-	return (auxStop,auxProhibido,auxPeligro, scoreStop,scorePeligro,scoreProhibido)
-
-
-'''
-
-def correlarMascara(imagenentrada):
-	auxStop = 0
-	auxProhibido = 0
-	auxPeligro = 0
-	auxPeligro45 = 0
-	scoreStop=0
-	scoreProhibido=0
-	scorePeligro=0
-	scorePeligro45=0
-	auxMultiStop=0
-	auxMultiProhibido=0
-	auxMultiPeligro=0
-	auxMultiPeligro45=0
-	for i in range(25):
-		for j in range(25):
-			auxMultiStop= mascaraStop[i, j] * imagenentrada[i, j]
-			auxMultiProhibido= mascaraProhibido[i, j] * imagenentrada[i, j]
-			auxMultiPeligro= mascaraPeligro[i, j] * imagenentrada[i, j]
-			auxMultiPeligro45= macaraPeligro45[i, j] * imagenentrada[i, j]
-			auxStop = auxStop + (auxMultiStop)
-			auxProhibido = auxProhibido + (auxMultiProhibido)
-			auxPeligro = auxPeligro + (auxMultiPeligro)
-			auxPeligro45 = auxPeligro45 + (auxMultiPeligro45)
-			''''''if(auxMultiStop[2]>130 and auxMultiStop[0]<100 and auxMultiStop[1]<100):
-				scoreStop=scoreStop+1
-			if(auxMultiProhibido[2]>130 and auxMultiStop[0]<100 and auxMultiStop[1]<100):
-				scoreProhibido=scoreProhibido+1
-			if(auxMultiPeligro[2]>130 and auxMultiStop[0]<100 and auxMultiStop[1]<100):
-				scorePeligro=scorePeligro+1
-			if(auxMultiPeligro45[2]>130 and auxMultiStop[0]<100 and auxMultiStop[1]<100):
-				scorePeligro45=scorePeligro45+1''''''
-			if(auxMultiStop[0]>130 and auxMultiStop[2]<100 and auxMultiStop[1]<100):
-				scoreStop=scoreStop+1
-			if(auxMultiProhibido[0]>130 and auxMultiStop[2]<100 and auxMultiStop[1]<100):
-				scoreProhibido=scoreProhibido+1
-			if(auxMultiPeligro[0]>130 and auxMultiStop[2]<100 and auxMultiStop[1]<100):
-				scorePeligro=scorePeligro+1
-			if(auxMultiPeligro45[0]>130 and auxMultiStop[2]<100 and auxMultiStop[1]<100):
-				scorePeligro45=scorePeligro45+1
-	print()
-	print()
-	print("scoreStop  "+str(scoreStop))
-	print("scoreProhibido  "+str(scoreProhibido))
-	print("scorePeligro  "+str(scorePeligro))
-	print("scorePeligro45  "+str(scorePeligro45))
-	return (auxStop,auxProhibido,auxPeligro,auxPeligro45)
-'''
 
 '''
 def correlarm_aplicarmascarasennal(imagenentrada):

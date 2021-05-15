@@ -30,7 +30,7 @@ def hacedordeMSER(imagenColor):
     imageUint8 = ((imagenColor > 100) * 255).astype(np.uint8)
     # MSER
     arrayCeros = np.zeros((imageUint8.shape[0], imageUint8.shape[1], 3), dtype=np.uint8)
-    mser = cv2.MSER_create(_delta=5, _max_variation=0.5, _max_area=20000)
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.5, _max_area=20000, _min_area=200)
     polygons = mser.detectRegions(imageUint8)
     salidaMSER=None
     for polygon in polygons[0]:
@@ -65,72 +65,77 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario,
                 imagenvariableretornoposiciones=(temp)
                 variableretornoposiciones=(h1,h2,l1,l2)
                 i = i + 1
-                
-                cv2.imshow('sign' + str(i), temp)
-                aux = temp
-                # aux = cv2.cvtColor(aux,cv2.COLOR_BGR2GRAY)
+                try:
+                    #cv2.imshow(nombreimageent+'sign' + str(i), temp)
+                    if temp is not None:
+                        # redimensionamos imagen de la señal filtrada a 25*25
+                        dim = (25, 25)
+                        redimensionado = cv2.resize(temp, dim, interpolation=cv2.INTER_AREA)
 
-                if aux is not None:
-                    # redimensionamos imagen de la señal filtrada a 25*25
-                    dim = (25, 25)
-                    redimensionado = cv2.resize(aux, dim, interpolation=cv2.INTER_AREA)
-
-                    (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
-                     auxiliarsumamascarapeligro, auxiliarscoreStop,auxiliarscorePeligro,
-                     auxiliarscoreProhibido) = correlarMascara(
-                        redimensionado)
+                        (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
+                         auxiliarsumamascarapeligro, auxiliarscoreStop,auxiliarscorePeligro,
+                         auxiliarscoreProhibido,auxiliarscoretodo) = correlarMascara(
+                            redimensionado)
 
 
-                    print("auxiliarsumamascarastop")
-                    print(auxiliarsumamascarastop)
+                        '''print("auxiliarsumamascarastop")
+                        print(auxiliarsumamascarastop)
 
-                    print("auxiliarsumamascarapeligro")
-                    print(auxiliarsumamascarapeligro)
+                        print("auxiliarsumamascarapeligro")
+                        print(auxiliarsumamascarapeligro)
 
-                    print("auxiliarsumamascaraprohibido")
-                    print(auxiliarsumamascaraprohibido)
-                    # Aqui comparamos la imagen redimensionada con las mascaras que tenemos de las señales
-                    # Y lo guardamos en una variable segun su situacion y señal que es
-                    # Tambien guardaremos la imagen en 3 carpetas una para cada señal
+                        print("auxiliarsumamascaraprohibido")
+                        print(auxiliarsumamascaraprohibido)'''
+                        # Aqui comparamos la imagen redimensionada con las mascaras que tenemos de las señales
+                        # Y lo guardamos en una variable segun su situacion y señal que es
+                        # Tambien guardaremos la imagen en 3 carpetas una para cada señal
 
 
-                    variablesennal = 4
-                    score=0
-                    if auxiliarscoreStop>60 or auxiliarscorePeligro>60 or auxiliarscoreProhibido>60:
-                        if auxiliarscoreStop > auxiliarscorePeligro and auxiliarscoreStop > auxiliarscoreProhibido:
-                            print("stop rgb")
-                            score=auxiliarscoreStop
-                            variablesennal =3
-                        elif auxiliarscoreProhibido > auxiliarscorePeligro and auxiliarscoreProhibido > auxiliarscoreStop:
-                            print("prohibido rgb")
-                            score=auxiliarscoreProhibido
-                            variablesennal =1
-                        elif auxiliarscorePeligro > auxiliarscoreStop and auxiliarscorePeligro > auxiliarscoreProhibido:
-                            print("peligro rgb")
-                            score=auxiliarscorePeligro
-                            variablesennal =2
+                        variablesennal = 4
+                        score=0
+                        if auxiliarscoreStop>60 or auxiliarscorePeligro>60 or auxiliarscoreProhibido>60 or auxiliarscoretodo>250:
+                            if auxiliarscoretodo>250:
+                                score=0
+                                variablesennal =4
+                            elif auxiliarscoreStop > auxiliarscorePeligro and auxiliarscoreStop > auxiliarscoreProhibido:
+                                print("stop")
+                                score=auxiliarscoreStop
+                                variablesennal =3
+                            elif auxiliarscoreProhibido > auxiliarscorePeligro and auxiliarscoreProhibido > auxiliarscoreStop:
+                                print("prohibido")
+                                score=auxiliarscoreProhibido
+                                variablesennal =1
+                            elif auxiliarscorePeligro > auxiliarscoreStop and auxiliarscorePeligro > auxiliarscoreProhibido:
+                                print("peligro")
+                                score=auxiliarscorePeligro
+                                variablesennal =2
+                            else:
+                                variablesennal =4
                         else:
-                            variablesennal =4
-                    else:
-                        if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > auxiliarsumamascaraprohibido[0] :
-                            print("stop rgb")
-                            variablesennal =3
-                        elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarastop[0]:
-                            print("prohibido rgb")
-                            variablesennal =1
-                        elif auxiliarsumamascarapeligro[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0] > auxiliarsumamascaraprohibido[0]:
-                            print("peligro rgb")
-                            variablesennal =2
-                        else:
-                            variablesennal =4
+                            if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > auxiliarsumamascaraprohibido[0] :
+                                print("stop")
+                                score=auxiliarsumamascarastop[0]
+                                variablesennal =3
+                            elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarastop[0]:
+                                print("prohibido")
+                                score=auxiliarsumamascaraprohibido[0]
+                                variablesennal =1
+                            elif auxiliarsumamascarapeligro[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0] > auxiliarsumamascaraprohibido[0]:
+                                print("peligro")
+                                score=auxiliarsumamascarapeligro[0]
+                                variablesennal =2
+                            else:
+                                variablesennal =4
 
 
-                    guardarcarpetasyfichero(nombreimageent,h1,h2,l1,l2,variablesennal,score)
-                    guardarimagencarpeta(redimensionado,variablesennal,originario)
+                        guardarcarpetasyfichero(nombreimageent+"  "+originario,h1,h2,l1,l2,variablesennal,score)
+                        guardarimagencarpeta(redimensionado,variablesennal,originario,nombreimageent)
+                except:
+                    print(nombreimageent+" la imagen no funciona")
 
-    cv2.imshow('res', res)
+    '''cv2.imshow('res', res)
     cv2.imshow('res2', res2)
-    cv2.waitKey(0)
+    cv2.waitKey(0)'''
     return ()
 
 
