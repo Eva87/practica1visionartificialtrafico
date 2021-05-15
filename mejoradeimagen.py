@@ -39,7 +39,7 @@ def hacedordeMSER(imagenColor):
         salidaMSER = cv2.fillPoly(arrayCeros, [polygon], colorRGB)
     return salidaMSER
 
-def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario):
+def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario,nombreimageent):
     i = 0
     imagenvariableretornoposiciones=None
     variableretornoposiciones=None
@@ -65,6 +65,7 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario)
                 imagenvariableretornoposiciones=(temp)
                 variableretornoposiciones=(h1,h2,l1,l2)
                 i = i + 1
+                
                 cv2.imshow('sign' + str(i), temp)
                 aux = temp
                 # aux = cv2.cvtColor(aux,cv2.COLOR_BGR2GRAY)
@@ -74,22 +75,9 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario)
                     dim = (25, 25)
                     redimensionado = cv2.resize(aux, dim, interpolation=cv2.INTER_AREA)
 
-
-
-
-
-
-
-
-
-
-
-
-
-                    '''Ahora la imagen en byn'''
-
                     (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
-                     auxiliarsumamascarapeligro, auxiliarsumamascarapeligro45) = correlarMascara(
+                     auxiliarsumamascarapeligro, auxiliarscoreStop,auxiliarscorePeligro,
+                     auxiliarscoreProhibido) = correlarMascara(
                         redimensionado)
 
 
@@ -98,60 +86,46 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario)
 
                     print("auxiliarsumamascarapeligro")
                     print(auxiliarsumamascarapeligro)
-                    print("auxiliarsumamascarapeligro45")
-                    print(auxiliarsumamascarapeligro45)
 
                     print("auxiliarsumamascaraprohibido")
                     print(auxiliarsumamascaraprohibido)
                     # Aqui comparamos la imagen redimensionada con las mascaras que tenemos de las señales
                     # Y lo guardamos en una variable segun su situacion y señal que es
-                    # Tambien guardaremos la imagen en una carpeta o en 3 carpetas una para cada señal
-                    # Si es rgb
+                    # Tambien guardaremos la imagen en 3 carpetas una para cada señal
 
-                    '''
-                    variablesennal=4
-                    if auxiliarsumamascarastop > auxiliarsumamascarapeligro and auxiliarsumamascarastop > auxiliarsumamascaraprohibido and auxiliarsumamascarastop > auxiliarsumamascarapeligro45:
-                        print("stop rgb")
-                        variablesennal =0
-                    elif auxiliarsumamascaraprohibido > auxiliarsumamascarapeligro and auxiliarsumamascaraprohibido > auxiliarsumamascarapeligro45 and auxiliarsumamascaraprohibido > auxiliarsumamascarastop:
-                        print("prohibido rgb")
-                        variablesennal =1
-                    elif (auxiliarsumamascarapeligro > auxiliarsumamascarastop and auxiliarsumamascarapeligro > auxiliarsumamascaraprohibido) or (auxiliarsumamascarapeligro45 > auxiliarsumamascarastop and auxiliarsumamascarapeligro45> auxiliarsumamascaraprohibido):
-                        print("peligro rgb")
-                        variablesennal =2
-                    else:
-                        print("stop2 rgb")
-                        variablesennal =3
-                    '''
-                    
-                    variablesennal=4
-                    if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > auxiliarsumamascaraprohibido[0] and auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro45[0]:
-                        print("stop rgb")
-                        variablesennal =3
-                    elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro45[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarastop[0]:
-                        print("prohibido rgb")
-                        variablesennal =1
-                    elif (auxiliarsumamascarapeligro[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0] > auxiliarsumamascaraprohibido[0]) or (auxiliarsumamascarapeligro45[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro45[0] > auxiliarsumamascaraprohibido[0]):
-                        print("peligro rgb")
-                        variablesennal =2
-                    else:
-                        variablesennal =0
 
-                    '''# si es bgr
-                    if auxiliarsumamascarastop[2] > auxiliarsumamascarapeligro[2] and auxiliarsumamascarastop[2] > \
-                            auxiliarsumamascaraprohibido[2] and auxiliarsumamascarastop[2] > \
-                            auxiliarsumamascarapeligro45[2]:
-                        print("stop  bgr")
-                    elif auxiliarsumamascaraprohibido[2] > auxiliarsumamascarapeligro[2] and \
-                            auxiliarsumamascaraprohibido[2] > auxiliarsumamascarapeligro45[2] and \
-                            auxiliarsumamascaraprohibido[2] > auxiliarsumamascarastop[2]:
-                        print("prohibido bgr")
-                    elif (auxiliarsumamascarapeligro[2] > auxiliarsumamascarastop[2] and auxiliarsumamascarapeligro[2] >
-                          auxiliarsumamascaraprohibido[2]) or (
-                            auxiliarsumamascarapeligro45[2] > auxiliarsumamascarastop[2] and
-                            auxiliarsumamascarapeligro45[2] > auxiliarsumamascaraprohibido[2]):
-                        print("peligro bgr")'''
-                    guardarcarpetasyfichero(h1,h2,l1,l2,variablesennal)
+                    variablesennal = 4
+                    score=0
+                    if auxiliarscoreStop>60 or auxiliarscorePeligro>60 or auxiliarscoreProhibido>60:
+                        if auxiliarscoreStop > auxiliarscorePeligro and auxiliarscoreStop > auxiliarscoreProhibido:
+                            print("stop rgb")
+                            score=auxiliarscoreStop
+                            variablesennal =3
+                        elif auxiliarscoreProhibido > auxiliarscorePeligro and auxiliarscoreProhibido > auxiliarscoreStop:
+                            print("prohibido rgb")
+                            score=auxiliarscoreProhibido
+                            variablesennal =1
+                        elif auxiliarscorePeligro > auxiliarscoreStop and auxiliarscorePeligro > auxiliarscoreProhibido:
+                            print("peligro rgb")
+                            score=auxiliarscorePeligro
+                            variablesennal =2
+                        else:
+                            variablesennal =4
+                    else:
+                        if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > auxiliarsumamascaraprohibido[0] :
+                            print("stop rgb")
+                            variablesennal =3
+                        elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarastop[0]:
+                            print("prohibido rgb")
+                            variablesennal =1
+                        elif auxiliarsumamascarapeligro[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0] > auxiliarsumamascaraprohibido[0]:
+                            print("peligro rgb")
+                            variablesennal =2
+                        else:
+                            variablesennal =4
+
+
+                    guardarcarpetasyfichero(nombreimageent,h1,h2,l1,l2,variablesennal,score)
                     guardarimagencarpeta(redimensionado,variablesennal,originario)
 
     cv2.imshow('res', res)

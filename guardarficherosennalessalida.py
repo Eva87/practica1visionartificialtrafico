@@ -5,12 +5,12 @@ from datetime import date, datetime
 
 import cv2
 
-def guardarcarpetasyfichero(p1,p2,p3,p4,sennal):
+def guardarcarpetasyfichero(nomiment,p1,p2,p3,p4,sennal,puntuacion):
 
     '''Comprobar como lo pide el profe si 0 1 2 para cada 1 si se cambia cambiar la de abajo'''
 
     ficherosalida = open ( "salida.txt", "a", encoding="utf-8")
-    ficherosalida.write(str(p1)+", "+str(p2)+", "+str(p3)+", "+str(p4)+", "+str(sennal)+"\n")
+    ficherosalida.write(str(nomiment)+", "+str(p1)+", "+str(p2)+", "+str(p3)+", "+str(p4)+", "+str(sennal)+", "+ str(puntuacion)+ "\n")
     ficherosalida.close()
 
     return ()
