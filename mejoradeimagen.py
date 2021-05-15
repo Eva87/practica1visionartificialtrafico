@@ -2,9 +2,9 @@
 import cv2
 from random import random
 from colorsys import hsv_to_rgb
-
 from guardarficherosennalessalida import *
 from signalMask import *
+
 def mascararojo (imagenHSV):
     rojo_bajo = np.array([0, 80, 40])
     rojo_alto = np.array([10, 255, 255])
@@ -24,7 +24,6 @@ def filtradorojoDifuminarNucleoCerradoCanny(entimagenHSV):
     cannybord = cv2.Canny(cerradoimag, 200, 300)
     return (cannybord,cerradoimag)
 
-
 def hacedordeMSER(imagenColor):
     # imagen oscura 20 y imagen clara 100
     imageUint8 = ((imagenColor > 100) * 255).astype(np.uint8)
@@ -40,9 +39,7 @@ def hacedordeMSER(imagenColor):
     return salidaMSER
 
 def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario,nombreimageent):
-    i = 0
-    imagenvariableretornoposiciones=None
-    variableretornoposiciones=None
+
     for con in contornosimagenentrada:
         rect = cv2.minAreaRect(con)
         box = np.int0(cv2.boxPoints(rect))
@@ -53,18 +50,16 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario,
             cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
             cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
 
-            h1 = max([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
-            h2 = min([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
-            l1 = max([box][0][0][0], [box][0][1][0], [box][0][2][0], [box][0][3][0])
-            l2 = min([box][0][0][0], [box][0][1][0], [box][0][2][0], [box][0][3][0])
+            x1 = max([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
+            x2 = min([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
+            y1 = max([box][0][0][0], [box][0][1][0], [box][0][2][0], [box][0][3][0])
+            y2 = min([box][0][0][0], [box][0][1][0], [box][0][2][0], [box][0][3][0])
 
-            aux = 0
-            if h1 - h2 > 0 and l1 - l2 > 0:
+            if x1 - x2 > 0 and y1 - y2 > 0:
                 # Aqui recortamos la imagen encontrada como contorno
-                temp = imgorigin[h2:h1, l2:l1]
-                imagenvariableretornoposiciones=(temp)
-                variableretornoposiciones=(h1,h2,l1,l2)
-                i = i + 1
+                temp = imgorigin[x2:x1, y2:y1]
+
+
                 try:
                     #cv2.imshow(nombreimageent+'sign' + str(i), temp)
                     if temp is not None:
@@ -72,64 +67,16 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario,
                         dim = (25, 25)
                         redimensionado = cv2.resize(temp, dim, interpolation=cv2.INTER_AREA)
 
-                        (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
-                         auxiliarsumamascarapeligro, auxiliarscoreStop,auxiliarscorePeligro,
-                         auxiliarscoreProhibido,auxiliarscoretodo) = correlarMascara(
-                            redimensionado)
+                        (puntos,variablesen) = correlarMascara(redimensionado)
 
+                        '''
+                        si la imagen es en byn o escala de gris hacer la mascara de correlacion nuevamente
+                        para estos parametros indicando que la imagen es gris o como masamos en nombreimageent, 
+                        que es la funcion que esta llamando que lo determine ella
+                        '''
 
-                        '''print("auxiliarsumamascarastop")
-                        print(auxiliarsumamascarastop)
-
-                        print("auxiliarsumamascarapeligro")
-                        print(auxiliarsumamascarapeligro)
-
-                        print("auxiliarsumamascaraprohibido")
-                        print(auxiliarsumamascaraprohibido)'''
-                        # Aqui comparamos la imagen redimensionada con las mascaras que tenemos de las señales
-                        # Y lo guardamos en una variable segun su situacion y señal que es
-                        # Tambien guardaremos la imagen en 3 carpetas una para cada señal
-
-
-                        variablesennal = 4
-                        score=0
-                        if auxiliarscoreStop>60 or auxiliarscorePeligro>60 or auxiliarscoreProhibido>60 or auxiliarscoretodo>250:
-                            if auxiliarscoretodo>250:
-                                score=0
-                                variablesennal =4
-                            elif auxiliarscoreStop > auxiliarscorePeligro and auxiliarscoreStop > auxiliarscoreProhibido:
-                                print("stop")
-                                score=auxiliarscoreStop
-                                variablesennal =3
-                            elif auxiliarscoreProhibido > auxiliarscorePeligro and auxiliarscoreProhibido > auxiliarscoreStop:
-                                print("prohibido")
-                                score=auxiliarscoreProhibido
-                                variablesennal =1
-                            elif auxiliarscorePeligro > auxiliarscoreStop and auxiliarscorePeligro > auxiliarscoreProhibido:
-                                print("peligro")
-                                score=auxiliarscorePeligro
-                                variablesennal =2
-                            else:
-                                variablesennal =4
-                        else:
-                            if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > auxiliarsumamascaraprohibido[0] :
-                                print("stop")
-                                score=auxiliarsumamascarastop[0]
-                                variablesennal =3
-                            elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0] > auxiliarsumamascarastop[0]:
-                                print("prohibido")
-                                score=auxiliarsumamascaraprohibido[0]
-                                variablesennal =1
-                            elif auxiliarsumamascarapeligro[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0] > auxiliarsumamascaraprohibido[0]:
-                                print("peligro")
-                                score=auxiliarsumamascarapeligro[0]
-                                variablesennal =2
-                            else:
-                                variablesennal =4
-
-
-                        guardarcarpetasyfichero(nombreimageent+"  "+originario,h1,h2,l1,l2,variablesennal,score)
-                        guardarimagencarpeta(redimensionado,variablesennal,originario,nombreimageent)
+                        guardarcarpetasyfichero(nombreimageent+"  "+originario,x1,x2,y1,y2,variablesen,puntos)
+                        guardarimagencarpeta(redimensionado,variablesen,originario,nombreimageent)
                 except:
                     print(nombreimageent+" la imagen no funciona")
 

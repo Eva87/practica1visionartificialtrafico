@@ -214,10 +214,48 @@ def correlarMascara(imagenentrada):
 				scorePeligro=scorePeligro+1
 			if auxMultitodo[0] > 90 and auxMultitodo[1] < 180 and auxMultitodo[2] < 180:
 				scoretodo=scoretodo+1
+	(puntos,variablesen)=calcularsennalcorrecta (auxStop,auxProhibido,auxPeligro, scoreStop,scorePeligro,scoreProhibido,scoretodo)
+	return puntos,variablesen
 
-	return (auxStop,auxProhibido,auxPeligro, scoreStop,scorePeligro,scoreProhibido,scoretodo)
-
-
+def calcularsennalcorrecta(auxiliarsumamascarastop,auxiliarsumamascarapeligro, auxiliarsumamascaraprohibido,auxiliarscoreStop,auxiliarscorePeligro,auxiliarscoreProhibido,auxiliarscoretodo):
+	score = 0
+	if auxiliarscoreStop > 60 or auxiliarscorePeligro > 60 or auxiliarscoreProhibido > 60 or auxiliarscoretodo > 250:
+		if auxiliarscoretodo > 250:
+			score = 0
+			variablesennal = 4
+		elif auxiliarscoreStop > auxiliarscorePeligro and auxiliarscoreStop > auxiliarscoreProhibido:
+			print("stop")
+			score = auxiliarscoreStop
+			variablesennal = 3
+		elif auxiliarscoreProhibido > auxiliarscorePeligro and auxiliarscoreProhibido > auxiliarscoreStop:
+			print("prohibido")
+			score = auxiliarscoreProhibido
+			variablesennal = 1
+		elif auxiliarscorePeligro > auxiliarscoreStop and auxiliarscorePeligro > auxiliarscoreProhibido:
+			print("peligro")
+			score = auxiliarscorePeligro
+			variablesennal = 2
+		else:
+			variablesennal = 4
+	else:
+		if auxiliarsumamascarastop[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascarastop[0] > \
+				auxiliarsumamascaraprohibido[0]:
+			print("stop")
+			score = auxiliarsumamascarastop[0]
+			variablesennal = 3
+		elif auxiliarsumamascaraprohibido[0] > auxiliarsumamascarapeligro[0] and auxiliarsumamascaraprohibido[0] > \
+				auxiliarsumamascarastop[0]:
+			print("prohibido")
+			score = auxiliarsumamascaraprohibido[0]
+			variablesennal = 1
+		elif auxiliarsumamascarapeligro[0] > auxiliarsumamascarastop[0] and auxiliarsumamascarapeligro[0] > \
+				auxiliarsumamascaraprohibido[0]:
+			print("peligro")
+			score = auxiliarsumamascarapeligro[0]
+			variablesennal = 2
+		else:
+			variablesennal = 4
+	return score,variablesennal
 '''
 def correlarm_aplicarmascarasennal(imagenentrada):
 	auxiliarsumamaskstop = 0

@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 import cv2
 
 def guardarcarpetasyfichero(nomiment,p1,p2,p3,p4,sennal,puntuacion):
