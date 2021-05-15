@@ -30,7 +30,7 @@ def hacedordeMSER(imagenColor):
     imageUint8 = ((imagenColor > 100) * 255).astype(np.uint8)
     # MSER
     arrayCeros = np.zeros((imageUint8.shape[0], imageUint8.shape[1], 3), dtype=np.uint8)
-    mser = cv2.MSER_create(_delta=5, _max_variation=0.5, _max_area=20000)
+    mser = cv2.MSER_create(_delta=5, _max_variation=0.5, _max_area=20000, _min_area=200)
     polygons = mser.detectRegions(imageUint8)
     salidaMSER=None
     for polygon in polygons[0]:
@@ -66,15 +66,11 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario,
                 variableretornoposiciones=(h1,h2,l1,l2)
                 i = i + 1
                 try:
-
                     #cv2.imshow(nombreimageent+'sign' + str(i), temp)
-                    aux = temp
-                    # aux = cv2.cvtColor(aux,cv2.COLOR_BGR2GRAY)
-
-                    if aux is not None:
+                    if temp is not None:
                         # redimensionamos imagen de la señal filtrada a 25*25
                         dim = (25, 25)
-                        redimensionado = cv2.resize(aux, dim, interpolation=cv2.INTER_AREA)
+                        redimensionado = cv2.resize(temp, dim, interpolation=cv2.INTER_AREA)
 
                         (auxiliarsumamascarastop, auxiliarsumamascaraprohibido,
                          auxiliarsumamascarapeligro, auxiliarscoreStop,auxiliarscorePeligro,
@@ -133,7 +129,7 @@ def recorteCorrelarSignals(contornosimagenentrada,res,res2,imgorigin,originario,
 
 
                         guardarcarpetasyfichero(nombreimageent+"  "+originario,h1,h2,l1,l2,variablesennal,score)
-                        guardarimagencarpeta(redimensionado,variablesennal,originario)
+                        guardarimagencarpeta(redimensionado,variablesennal,originario,nombreimageent)
                 except:
                     print(nombreimageent+" la imagen no funciona")
 

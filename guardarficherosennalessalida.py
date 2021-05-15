@@ -7,15 +7,16 @@ def guardarcarpetasyfichero(nomiment,p1,p2,p3,p4,sennal,puntuacion):
     ficherosalida.close()
     return ()
 
-def guardarimagencarpeta(imagensalida,variablesenl,orig):
+def guardarimagencarpeta(imagensalida,variablesenl,orig,nomimageent):
     cadenasalidaimagen=str(datetime.now().strftime("%d%m%Y%H%M%S%f"))
+    nomsal=nomimageent[7:12]
     if variablesenl==3:
-        cadenasalidaimagen="./stop/"+orig+"stop"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./stop/"+orig+nomsal+"stop"+cadenasalidaimagen+".jpg"
     elif variablesenl==1:
-        cadenasalidaimagen="./prohibido/"+orig+"prohibido"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./prohibido/"+orig+nomsal+"prohibido"+cadenasalidaimagen+".jpg"
     elif variablesenl==2:
-        cadenasalidaimagen="./peligro/"+orig+"peligro"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./peligro/"+orig+nomsal+"peligro"+cadenasalidaimagen+".jpg"
     else:
-        cadenasalidaimagen="./otros/"+orig+"otros"+cadenasalidaimagen+".jpg"
+        cadenasalidaimagen="./otros/"+orig+nomsal+"otros"+cadenasalidaimagen+".jpg"
     cv2.imwrite(cadenasalidaimagen, imagensalida)
     return
