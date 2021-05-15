@@ -11,6 +11,19 @@ for strinentradaimg in sorted (glob.glob("./train_10_ejemplos/*")):
     if finnombre !="txt" and (finnombre=="jpg" or finnombre=="ppm"):
         imagen = cv2.imread(strinentradaimg)
 
+
+
+        '''
+        quizas se pueda probar en alguno 
+        img_med = cv2.adaptiveThreshold(imagenclarabyn, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 21, 15)
+        img_gauss = cv2.adaptiveThreshold(imagenclarabyn, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 21,
+                                          15)
+        '''
+
+
+
+
+
         imagenhsv = cv2.cvtColor(imagen, cv2.COLOR_BGR2HSV)
         (cannybordes, cerradoimagen) = filtradorojoDifuminarNucleoCerradoCanny(imagenhsv)
         contornos, jerarquia = cv2.findContours(cannybordes.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
