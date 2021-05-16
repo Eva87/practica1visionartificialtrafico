@@ -1,7 +1,7 @@
 #Proyecto creado por Eva María Hoyo de la Cruz, TongTong Xu y Antonio Francisco Roldan Martín
 #pip install opencv-contrib-python
 import glob
-from mejoradeimagen import *
+from procesadoImagen import *
 
 
 for strinentradaimg in sorted (glob.glob("./train_10_ejemplos/*")):
@@ -16,12 +16,11 @@ for strinentradaimg in sorted (glob.glob("./train_10_ejemplos/*")):
             if len(contornos) > 0:
                 salMSER = hacedordeMSER(cannybordes)
                 if salMSER is not None:
-                    result = salMSER.copy()
-                    result2 = imagen.copy()
-                    recorteCorrelarSignals(contornos, result, result2, imagen, "AlternativaMSER", strinentradaimg)
+                    recorteCorrelarSignals(contornos,imagen.copy(), imagen, "AlternativaMSER", strinentradaimg)
 
 
 
+#cv2.waitKey(0)
 '''
 como usar el main.py
             

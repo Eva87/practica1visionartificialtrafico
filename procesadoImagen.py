@@ -2,7 +2,7 @@
 import cv2
 from random import random
 from colorsys import hsv_to_rgb
-from guardarficherosennalessalida import *
+from guardarSalida import *
 from signalMask import *
 
 tamannoredimension = (25, 25)
@@ -44,7 +44,8 @@ def hacedordeMSER(imagenColor):
     return salidaMSER, polygons
 
 
-def recorteCorrelarSignals(contornosimagenentrada, res, res2, imgorigin, funcionoriginaria, nombreimageent):
+def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funcionoriginaria, nombreimageent):
+    i=0
     for con in contornosimagenentrada:
         if funcionoriginaria == "AlternativaMSER":
             rect = cv2.minAreaRect(con)
@@ -52,8 +53,7 @@ def recorteCorrelarSignals(contornosimagenentrada, res, res2, imgorigin, funcion
             distancia1 = rect[1][0]
             distancia2 = rect[1][1]
             if (abs(distancia1 - distancia2) < 30 and distancia1 > 10):
-                cv2.drawContours(res, [box], -1, (0, 0, 255), 2)
-                cv2.drawContours(res2, [box], -1, (0, 0, 255), 2)
+                cv2.drawContours(imagenCopia, [box], -1, (0, 0, 255), 2)
                 x1 = max([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
                 x2 = min([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
                 y1 = max([box][0][0][0], [box][0][1][0], [box][0][2][0], [box][0][3][0])
@@ -84,8 +84,7 @@ def recorteCorrelarSignals(contornosimagenentrada, res, res2, imgorigin, funcion
             w = w + 5
             h = h + 5
             if (abs(w - h) < 30 and w > 10):
-                cv2.rectangle(res, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                cv2.rectangle(res2, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.rectangle(imagenCopia, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 if w > 0 and h > 0:
                     # Aqui recortamos la imagen encontrada como contorno
                     imagenAuxiliar = imgorigin[y:(y + h), x:(x + w)]
@@ -101,4 +100,6 @@ def recorteCorrelarSignals(contornosimagenentrada, res, res2, imgorigin, funcion
                             guardarimagencarpeta(redimensionado, variablesen, funcionoriginaria, nombreimageent)
                     except:
                         print(nombreimageent + " la imagen no funciona")
+
+    cv2.imshow("imagenCopia"+nombreimageent,imagenCopia )
     return ()
