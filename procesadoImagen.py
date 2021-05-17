@@ -46,6 +46,7 @@ def hacedordeMSER(imagenColor):
 
 def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funcionoriginaria, nombreimageent):
     i=0
+    yk,xk,canales=imagenCopia.shape
     for con in contornosimagenentrada:
         if funcionoriginaria == "AlternativaMSER":
             rect = cv2.minAreaRect(con)
@@ -81,15 +82,23 @@ def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funci
             x, y, w, h = cv2.boundingRect(con)
             x = x - 5
             y = y - 5
-            w = w + 5
-            h = h + 5
+            x2 = x + w + 5
+            y2 = y + h + 5
+            if x<0:
+                x=0
+            if y<0:
+                y=0
+            if x2>xk:
+                x2 = xk
+            if y2>yk:
+                y2=yk
             if (abs(w - h) < 30 and w > 10):
-                cv2.rectangle(imagenCopia, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.rectangle(imagenCopia, (x, y), (x2, y2), (0, 255, 0), 2)
                 if w > 0 and h > 0:
                     # Aqui recortamos la imagen encontrada como contorno
-                    imagenAuxiliar = imgorigin[y:(y + h), x:(x + w)]
+                    imagenAuxiliar = imgorigin[y:(y2), x:(x2)]
                     try:
-                        # cv2.imshow(nombreimageent+'sign' + str(i), imagenAuxiliar)
+                        #cv2.imshow(nombreimageent+'sign' + str(i), imagenAuxiliar)
                         if imagenAuxiliar is not None:
                             # redimensionamos imagen de la señal filtrada a 25*25
                             redimensionado = cv2.resize(imagenAuxiliar, tamannoredimension,
