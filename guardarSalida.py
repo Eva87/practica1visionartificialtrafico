@@ -12,12 +12,7 @@ def guardarcarpetasyfichero(nomiment, p1, p2, p3, p4, sennal, puntuacion):
 
 def guardarimagencarpeta(imagensalida, variablesenl, orig, nomimageent):
     cadenasalidaimagen = str(datetime.now().strftime("%d%m%Y%H%M%S%f"))
-    #nomsal = nomimageent[7:12]
-    nomsal = nomimageent.replace("/","")
-    nomsal = nomsal.replace("\\","")
-    nomsal = nomsal.replace(".","")
-    nomsal = nomsal.replace("_","")
-    nomsal = nomsal[:3]
+    nomsal = nomimageent[7:12]
     if variablesenl == 3:
         cadenasalidaimagen = "./stop/" + orig + nomsal + "stop" + cadenasalidaimagen + ".jpg"
     elif variablesenl == 1:
