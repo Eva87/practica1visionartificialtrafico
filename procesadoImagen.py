@@ -45,9 +45,10 @@ def hacedordeMSER(imagenColor):
 
 
 def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funcionoriginaria, nombreimageent):
-    i=0
+    #i=0
     yk,xk,canales=imagenCopia.shape
     for con in contornosimagenentrada:
+        #i=+1
         if funcionoriginaria == "AlternativaMSER":
             rect = cv2.minAreaRect(con)
             box = np.int0(cv2.boxPoints(rect))
@@ -93,7 +94,7 @@ def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funci
                 cv2.rectangle(imagenCopia, (x, y), (x2, y2), (0, 255, 0), 2)
                 if w > 0 and h > 0:
                     # Aqui recortamos la imagen encontrada como contorno
-                    imagenAuxiliar = imgorigin[y:(y2), x:(x2)]
+                    imagenAuxiliar = imgorigin[y:y2, x:x2]
                     guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x, x2, y, y2)
 
     cv2.imshow("imagenCopia"+nombreimageent,imagenCopia )
@@ -105,11 +106,9 @@ def guardados(imagenAuxil,nombreimagee,funcionoriginar,x11, x22, y11, y22):
         # cv2.imshow(nombreimageent+'sign' + str(i), imagenAuxiliar)
         if imagenAuxil is not None:
             # redimensionamos imagen de la señal filtrada a 25*25
-            redimensionado = cv2.resize(imagenAuxil, tamannoredimension,
-                                        interpolation=cv2.INTER_AREA)
+            redimensionado = cv2.resize(imagenAuxil, tamannoredimension, interpolation=cv2.INTER_AREA)
             (puntos, variablesen) = correlarMascara(redimensionado)
-            guardarcarpetasyfichero(nombreimagee + "  " + funcionoriginar, x11, x22, y11, y22,
-                                    variablesen, puntos)
+            guardarcarpetasyfichero(nombreimagee + "  " + funcionoriginar, x11, x22, y11, y22, variablesen, puntos)
             guardarimagencarpeta(redimensionado, variablesen, funcionoriginar, nombreimagee)
     except:
         print(nombreimagee + " la imagen no funciona")
