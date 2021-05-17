@@ -63,21 +63,18 @@ def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funci
                 x2 = x2 + 5
                 y1 = y1 - 5
                 y2 = y2 + 5
+                if x1<0:
+                    x1=0
+                if y1<0:
+                    y1=0
+                if x2>xk:
+                    x2 = xk
+                if y2>yk:
+                    y2=yk
                 if x1 - x2 > 0 and y1 - y2 > 0:
                     # Aqui recortamos la imagen encontrada como contorno
                     imagenAuxiliar = imgorigin[x2:x1, y2:y1]
-                    try:
-                        # cv2.imshow(nombreimageent+'sign' + str(i), imagenAuxiliar)
-                        if imagenAuxiliar is not None:
-                            # redimensionamos imagen de la señal filtrada a 25*25
-                            redimensionado = cv2.resize(imagenAuxiliar, tamannoredimension,
-                                                        interpolation=cv2.INTER_AREA)
-                            (puntos, variablesen) = correlarMascara(redimensionado)
-                            guardarcarpetasyfichero(nombreimageent + "  " + funcionoriginaria, x1, x2, y1, y2,
-                                                    variablesen, puntos)
-                            guardarimagencarpeta(redimensionado, variablesen, funcionoriginaria, nombreimageent)
-                    except:
-                        print(nombreimageent + " la imagen no funciona")
+                    guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x1, x2, y1, y2)
         else:
             x, y, w, h = cv2.boundingRect(con)
             x = x - 5
@@ -97,18 +94,22 @@ def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funci
                 if w > 0 and h > 0:
                     # Aqui recortamos la imagen encontrada como contorno
                     imagenAuxiliar = imgorigin[y:(y2), x:(x2)]
-                    try:
-                        #cv2.imshow(nombreimageent+'sign' + str(i), imagenAuxiliar)
-                        if imagenAuxiliar is not None:
-                            # redimensionamos imagen de la señal filtrada a 25*25
-                            redimensionado = cv2.resize(imagenAuxiliar, tamannoredimension,
-                                                        interpolation=cv2.INTER_AREA)
-                            (puntos, variablesen) = correlarMascara(redimensionado)
-                            guardarcarpetasyfichero(nombreimageent + "  " + funcionoriginaria, x, x + w, y, y + h,
-                                                    variablesen, puntos)
-                            guardarimagencarpeta(redimensionado, variablesen, funcionoriginaria, nombreimageent)
-                    except:
-                        print(nombreimageent + " la imagen no funciona")
+                    guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x, x2, y, y2)
 
     cv2.imshow("imagenCopia"+nombreimageent,imagenCopia )
     return ()
+
+
+def guardados(imagenAuxil,nombreimagee,funcionoriginar,x11, x22, y11, y22):
+    try:
+        # cv2.imshow(nombreimageent+'sign' + str(i), imagenAuxiliar)
+        if imagenAuxil is not None:
+            # redimensionamos imagen de la señal filtrada a 25*25
+            redimensionado = cv2.resize(imagenAuxil, tamannoredimension,
+                                        interpolation=cv2.INTER_AREA)
+            (puntos, variablesen) = correlarMascara(redimensionado)
+            guardarcarpetasyfichero(nombreimagee + "  " + funcionoriginar, x11, x22, y11, y22,
+                                    variablesen, puntos)
+            guardarimagencarpeta(redimensionado, variablesen, funcionoriginar, nombreimagee)
+    except:
+        print(nombreimagee + " la imagen no funciona")

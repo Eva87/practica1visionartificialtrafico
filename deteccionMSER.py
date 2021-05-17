@@ -8,7 +8,6 @@ for strinentradaimg in sorted (glob.glob("./train_10_ejemplos/*")):
     for strinentradaim in sorted(glob.glob(strinentradaimg)):
         if finnombre !="txt" and (finnombre=="jpg" or finnombre=="ppm"):
             imagen = cv2.imread(strinentradaimg)
-
             img_to_yuv = cv2.cvtColor(imagen, cv2.COLOR_BGR2YUV)
             img_to_yuv[:, :, 0] = cv2.equalizeHist(img_to_yuv[:, :, 0])
             hist_equalization_result = cv2.cvtColor(img_to_yuv, cv2.COLOR_YUV2BGR)
