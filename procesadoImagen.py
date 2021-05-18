@@ -75,7 +75,7 @@ def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funci
                 if x1 - x2 > 0 and y1 - y2 > 0:
                     # Aqui recortamos la imagen encontrada como contorno
                     imagenAuxiliar = imgorigin[x2:x1, y2:y1]
-                    guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x1, x2, y1, y2)
+                    guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x1, x2, y1, y2,imagenCopia)
         else:
             x, y, w, h = cv2.boundingRect(con)
             x = x - 5
@@ -91,17 +91,17 @@ def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funci
             if y2>yk:
                 y2=yk
             if (abs(w - h) < 30 and w > 10):
-                cv2.rectangle(imagenCopia, (x, y), (x2, y2), (0, 255, 0), 2)
+                cv2.rectangle(imagenCopia, (x, y), (x2, y2), (0, 0, 255), 2)
                 if w > 0 and h > 0:
                     # Aqui recortamos la imagen encontrada como contorno
                     imagenAuxiliar = imgorigin[y:y2, x:x2]
-                    guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x, x2, y, y2)
+                    guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x, x2, y, y2,imagenCopia)
 
-    cv2.imshow("imagenCopia"+nombreimageent,imagenCopia )
+    #cv2.imshow("imagenCopia"+nombreimageent,imagenCopia )
     return ()
 
 
-def guardados(imagenAuxil,nombreimagee,funcionoriginar,x11, x22, y11, y22):
+def guardados(imagenAuxil,nombreimagee,funcionoriginar,x11, x22, y11, y22,imagenCop):
     try:
         # cv2.imshow(nombreimageent+'sign' + str(i), imagenAuxiliar)
         if imagenAuxil is not None:
@@ -110,6 +110,6 @@ def guardados(imagenAuxil,nombreimagee,funcionoriginar,x11, x22, y11, y22):
             (puntos, variablesen) = correlarMascara(redimensionado)
             nombreimagee = nombreimagee[-9:]
             guardarcarpetasyfichero(nombreimagee, funcionoriginar, x11, x22, y11, y22, variablesen, puntos)
-            guardarimagencarpeta(redimensionado, variablesen, funcionoriginar, nombreimagee)
+            guardarimagencarpeta(redimensionado, variablesen, funcionoriginar, nombreimagee,imagenCop)
     except:
         print(nombreimagee + " la imagen no funciona")

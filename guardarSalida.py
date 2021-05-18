@@ -10,7 +10,7 @@ def guardarcarpetasyfichero(nomiment,orig, p1, p2, p3, p4, sennal, puntuacion):
     return ()
 
 
-def guardarimagencarpeta(imagensalida, variablesenl, orig, nomimageent):
+def guardarimagencarpeta(imagensalida, variablesenl, orig, nomimageent,imagenCopy):
     cadenasalidaimagen = str(datetime.now().strftime("%d%m%Y%H%M%S%f"))
     #nomsal = nomimageent[7:12]
     '''nomsal = nomimageent.replace("/", "")
@@ -25,4 +25,5 @@ def guardarimagencarpeta(imagensalida, variablesenl, orig, nomimageent):
     else:
         cadenasalidaimagen = "./otros"+orig+"/" + nomimageent + "otros" + cadenasalidaimagen + ".jpg"
     cv2.imwrite(cadenasalidaimagen, imagensalida)
+    cv2.imwrite("./"+orig+"/"+nomimageent + ".jpg",imagenCopy)
     return
