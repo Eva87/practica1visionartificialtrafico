@@ -25,9 +25,5 @@ for strinentradaimg in sorted (glob.glob("./train_10_ejemplos/*")):
 '''
 como usar el main.py
             
-preguntar profe si que en la salida ponemos de que algoritmo sale 
-
-clases o con funciones llega
-
-el peso es en tanto por ciento o en cantidad de pixeles que coinciden
+preguntar profe si que en la salida ponemos de que algoritmo sale para las imagenes
 '''

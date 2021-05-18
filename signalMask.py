@@ -256,4 +256,4 @@ def calcularsennalcorrecta(auxiliarsumamascarastop, auxiliarsumamascarapeligro, 
             variablesennal = 2
         else:
             variablesennal = 4
-    return score, variablesennal
+    return (int(score*100/255)), variablesennal

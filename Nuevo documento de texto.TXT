@@ -1,4 +1,0 @@
- el main.py que os paso es para que se use desde la línea de comandos. Yo voy a usar ese
-  script para ejecutar todas las prácticas y hacer la corrección. En cualquier caso, vosotros
-  podéis desarrollar la práctica sin usar ese main.py que está pensado para llamarlo como
-  "python main.py ...".

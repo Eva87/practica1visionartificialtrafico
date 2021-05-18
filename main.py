@@ -1,5 +1,5 @@
 import argparse
-
+import glob
 
 if __name__ == "__main__":
 
@@ -22,7 +22,10 @@ if __name__ == "__main__":
 
     # Evaluate sign detections
 
-
+'''for strinentradaimg in sorted (glob.glob("./train_10_ejemplos/*")):
+    finnombre = strinentradaimg[-3:]
+    for strinentradaim in sorted(glob.glob(strinentradaimg)):
+        if finnombre !="txt" and (finnombre=="jpg" or finnombre=="ppm"):'''
 
 
 

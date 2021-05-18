@@ -108,7 +108,8 @@ def guardados(imagenAuxil,nombreimagee,funcionoriginar,x11, x22, y11, y22):
             # redimensionamos imagen de la señal filtrada a 25*25
             redimensionado = cv2.resize(imagenAuxil, tamannoredimension, interpolation=cv2.INTER_AREA)
             (puntos, variablesen) = correlarMascara(redimensionado)
-            guardarcarpetasyfichero(nombreimagee + "  " + funcionoriginar, x11, x22, y11, y22, variablesen, puntos)
+            nombreimagee = nombreimagee[-9:]
+            guardarcarpetasyfichero(nombreimagee, funcionoriginar, x11, x22, y11, y22, variablesen, puntos)
             guardarimagencarpeta(redimensionado, variablesen, funcionoriginar, nombreimagee)
     except:
         print(nombreimagee + " la imagen no funciona")
