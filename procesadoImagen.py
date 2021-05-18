@@ -1,7 +1,7 @@
 # Proyecto creado por Eva María Hoyo de la Cruz, TongTong Xu y Antonio Francisco Roldan Martín
 import cv2
-from random import random
-from colorsys import hsv_to_rgb
+import random
+import colorsys
 from guardarSalida import *
 from signalMask import *
 
@@ -38,24 +38,24 @@ def hacedordeMSER(imagenColor):
     polygons = mser.detectRegions(imageUint8)
     salidaMSER = None
     for polygon in polygons[0]:
-        colorRGB = hsv_to_rgb(random(), 1, 1)
+        colorRGB = colorsys.hsv_to_rgb(random.random(), 1, 1)
         colorRGB = tuple(int(color * 255) for color in colorRGB)
         salidaMSER = cv2.fillPoly(arrayCeros, [polygon], colorRGB)
     return salidaMSER, polygons
 
 
 def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funcionoriginaria, nombreimageent):
-    #i=0
-    yk,xk,canales=imagenCopia.shape
+    # i=0
+    yk, xk, canales = imagenCopia.shape
     for con in contornosimagenentrada:
-        #i=+1
+        # i=+1
         if funcionoriginaria == "AlternativaMSER":
             rect = cv2.minAreaRect(con)
             box = np.int0(cv2.boxPoints(rect))
             distancia1 = rect[1][0]
             distancia2 = rect[1][1]
             if (abs(distancia1 - distancia2) < 30 and distancia1 > 10):
-                cv2.drawContours(imagenCopia, [box], -1, (0, 0, 255), 2)
+                #cv2.drawContours(imagenCopia, [box], -1, (0, 0, 255), 2)
                 x1 = max([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
                 x2 = min([box][0][0][1], [box][0][1][1], [box][0][2][1], [box][0][3][1])
                 y1 = max([box][0][0][0], [box][0][1][0], [box][0][2][0], [box][0][3][0])
@@ -64,44 +64,44 @@ def recorteCorrelarSignals(contornosimagenentrada, imagenCopia, imgorigin, funci
                 x2 = x2 + 5
                 y1 = y1 - 5
                 y2 = y2 + 5
-                if x1<0:
-                    x1=0
-                if y1<0:
-                    y1=0
-                if x2>xk:
+                if x1 < 0:
+                    x1 = 0
+                if y1 < 0:
+                    y1 = 0
+                if x2 > xk:
                     x2 = xk
-                if y2>yk:
-                    y2=yk
+                if y2 > yk:
+                    y2 = yk
                 if x1 - x2 > 0 and y1 - y2 > 0:
                     # Aqui recortamos la imagen encontrada como contorno
                     imagenAuxiliar = imgorigin[x2:x1, y2:y1]
-                    guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x1, x2, y1, y2,imagenCopia)
+                    imagenCopia=guardados(imagenAuxiliar, nombreimageent, funcionoriginaria, x1, x2, y1, y2, imgorigin, imagenCopia, distancia1,distancia2)
         else:
             x, y, w, h = cv2.boundingRect(con)
             x = x - 5
             y = y - 5
             x2 = x + w + 5
             y2 = y + h + 5
-            if x<0:
-                x=0
-            if y<0:
-                y=0
-            if x2>xk:
+            if x < 0:
+                x = 0
+            if y < 0:
+                y = 0
+            if x2 > xk:
                 x2 = xk
-            if y2>yk:
-                y2=yk
+            if y2 > yk:
+                y2 = yk
             if (abs(w - h) < 30 and w > 10):
-                cv2.rectangle(imagenCopia, (x, y), (x2, y2), (0, 0, 255), 2)
+                #cv2.rectangle(imagenCopia, (x, y), (x2, y2), (0, 0, 255), 2)
                 if w > 0 and h > 0:
-                    # Aqui recortamos la imagen encontrada como contorno
+                    # Aqui recortamos la imagen encontrada con rectangulo
                     imagenAuxiliar = imgorigin[y:y2, x:x2]
-                    guardados(imagenAuxiliar,nombreimageent,funcionoriginaria,x, x2, y, y2,imagenCopia)
+                    imagenCopia=guardados(imagenAuxiliar, nombreimageent, funcionoriginaria, x, x2, y, y2, imgorigin, imagenCopia,w,h)
 
-    #cv2.imshow("imagenCopia"+nombreimageent,imagenCopia )
+    # cv2.imshow("imagenCopia"+nombreimageent,imagenCopia )
     return ()
 
 
-def guardados(imagenAuxil,nombreimagee,funcionoriginar,x11, x22, y11, y22,imagenCop):
+def guardados(imagenAuxil, nombreimagee, funcionoriginar, x11, x22, y11, y22, imagenor, imagenCopi,d1,d2):
     try:
         # cv2.imshow(nombreimageent+'sign' + str(i), imagenAuxiliar)
         if imagenAuxil is not None:
@@ -109,7 +109,13 @@ def guardados(imagenAuxil,nombreimagee,funcionoriginar,x11, x22, y11, y22,imagen
             redimensionado = cv2.resize(imagenAuxil, tamannoredimension, interpolation=cv2.INTER_AREA)
             (puntos, variablesen) = correlarMascara(redimensionado)
             nombreimagee = nombreimagee[-9:]
+            if variablesen!=4:
+                if funcionoriginar == "AlternativaMSER":
+                    cv2.rectangle(imagenCopi, (x11, y11), (x22, y22), (0, 0, 255), 2)
+                else:
+                    cv2.rectangle(imagenCopi, (x11, y11), (x22, y22), (0, 0, 255), 2)
             guardarcarpetasyfichero(nombreimagee, funcionoriginar, x11, x22, y11, y22, variablesen, puntos)
-            guardarimagencarpeta(redimensionado, variablesen, funcionoriginar, nombreimagee,imagenCop)
+            guardarimagencarpeta(funcionoriginar, nombreimagee, imagenCopi)
     except:
         print(nombreimagee + " la imagen no funciona")
+    return (imagenCopi)
