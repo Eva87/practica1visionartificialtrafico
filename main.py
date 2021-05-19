@@ -8,12 +8,11 @@ import deteccionAlternativaconMSER
 python main.py –train_path /home/usuario/train --test_path /home/usuario/test –detector detector
 python main.py –train_path /home/usuario/train --test_path /home/usuario/test –detector MSER
 python main.py –train_path /home/usuario/train --test_path /home/usuario/test –detector Alternativa
-python main.py –train_path /home/usuario/train --test_path /home/usuario/test –detector detector
+python main.py –train_path /home/usuario/train --test_path /home/usuario/test –detector AlternativaMSER
 
 python main.py -–train_path ./train --test_path ./test -–detector MSER
 python main.py -–train_path ./train --test_path ./test -–detector Alternativa
-python main.py –train_path C:/Users/evaho/Desktop/kraken/va/practica1visionartificialtrafico/train --test_path C:/Users/evaho/Desktop/kraken/va/practica1visionartificialtrafico/test –detector Alternativa
-python main.py –train_path /home/usuario/train --test_path /home/usuario/test –detector detector
+python main.py -–train_path ./train --test_path ./test -–detector AlternativaMSER
 '''
 
 if __name__ == "__main__":
@@ -45,11 +44,11 @@ if __name__ == "__main__":
         for strinentradaim in sorted(glob.glob(strinentradaimg)):
             if finnombre != "txt" and (finnombre == "jpg" or finnombre == "ppm"):
                 if args.detector =="MSER":
-                    deteccionMSER.MSER(strinentradaim)
+                    deteccionMSER.mser.MSER(strinentradaim)
                 elif args.detector=="Alternativa":
-                    deteccionAlternativa.Alternativa(strinentradaim)
+                    deteccionAlternativa.alternativa.Alternativa(strinentradaim)
                 else:
-                    deteccionAlternativaconMSER.AlternativaMSER(strinentradaim)
+                    deteccionAlternativaconMSER.alternativaMSER.AlternativaMSER(strinentradaim)
 
 
     for strinentradaimg in sorted(glob.glob("./"+strtest+"/*")):
@@ -57,18 +56,16 @@ if __name__ == "__main__":
         for strinentradaim in sorted(glob.glob(strinentradaimg)):
             if finnombre != "txt" and (finnombre == "jpg" or finnombre == "ppm"):
                 if args.detector =="MSER":
-                    deteccionMSER.MSER(strinentradaim)
+                    deteccionMSER.mser.MSER(strinentradaim)
                 elif args.detector=="Alternativa":
-                    deteccionAlternativa.Alternativa(strinentradaim)
+                    deteccionAlternativa.alternativa.Alternativa(strinentradaim)
                 else:
-                    deteccionAlternativaconMSER.AlternativaMSER(strinentradaim)
+                    deteccionAlternativaconMSER.alternativaMSER.AlternativaMSER(strinentradaim)
 
-        '''for strinentradaimg in sorted(glob.glob("./" + "test" + "/*")):
-            finnombre = strinentradaimg[-3:]
-            for strinentradaim in sorted(glob.glob(strinentradaimg)):
-                if finnombre != "txt" and (finnombre == "jpg" or finnombre == "ppm"):
-
-                    deteccionMSER.MSER(strinentradaim)'''
-
-
-
+    '''
+    for strinentradaimg in sorted(glob.glob("./" + "train_10_ejemplos" + "/*")):
+        finnombre = strinentradaimg[-3:]
+        for strinentradaim in sorted(glob.glob(strinentradaimg)):
+            if finnombre != "txt" and (finnombre == "jpg" or finnombre == "ppm"):
+                    deteccionAlternativaconMSER.alternativaMSER.AlternativaMSER(strinentradaim)
+'''

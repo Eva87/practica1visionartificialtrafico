@@ -11,18 +11,20 @@ import numpy as np
         if finnombre != "txt" and (finnombre == "jpg" or finnombre == "ppm"):'''
 
 
-def AlternativaMSER(strinentradaimg):
-    imagen = cv2.imread(strinentradaimg)
-    contrast_img = cv2.addWeighted(imagen, 2.5, np.zeros(imagen.shape, imagen.dtype), 0, 0)
-    imagenhsv = cv2.cvtColor(contrast_img, cv2.COLOR_BGR2HSV)
-    (cannybordes, cerradoimagen) = procesadoImagen.filtradorojoDifuminarNucleoCerradoCanny(imagenhsv)
-    contornos, jerarquia = cv2.findContours(cannybordes.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+class alternativaMSER:
 
-    if len(contornos) > 0:
-        salMSER = procesadoImagen.hacedordeMSER(cannybordes)
-        if salMSER is not None:
-            procesadoImagen.recorteCorrelarSignals(contornos, imagen.copy(), imagen, "AlternativaMSER", strinentradaimg)
+    def AlternativaMSER(strinentradaimg):
+        imagen = cv2.imread(strinentradaimg)
+        contrast_img = cv2.addWeighted(imagen, 2.5, np.zeros(imagen.shape, imagen.dtype), 0, 0)
+        imagenhsv = cv2.cvtColor(contrast_img, cv2.COLOR_BGR2HSV)
+        (cannybordes, cerradoimagen) = procesadoImagen.filtradorojoDifuminarNucleoCerradoCanny(imagenhsv)
+        contornos, jerarquia = cv2.findContours(cannybordes.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    # cv2.waitKey(0)
+        if len(contornos) > 0:
+            salMSER = procesadoImagen.hacedordeMSER(cannybordes)
+            if salMSER is not None:
+                procesadoImagen.recorteCorrelarSignals(contornos, imagen.copy(), imagen, "AlternativaMSER", strinentradaimg)
 
-    return ()
+        # cv2.waitKey(0)
+
+        return ()
