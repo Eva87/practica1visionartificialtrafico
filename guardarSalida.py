@@ -1,5 +1,6 @@
 import datetime
 import cv2
+import os
 
 
 def guardarcarpetasyfichero(nomiment, orig, p1, p2, p3, p4, sennal, puntuacion):
@@ -11,6 +12,13 @@ def guardarcarpetasyfichero(nomiment, orig, p1, p2, p3, p4, sennal, puntuacion):
 
 
 def guardarimagencarpeta(orig, nomimageent, imagenCopy):
+    st="./" + orig + "/"
+    try:
+        os.mkdir( st )
+        print()
+    except:
+        #print("ya esta creado")
+        print()
     cv2.imwrite("./" + orig + "/" + nomimageent , imagenCopy)
     return
 

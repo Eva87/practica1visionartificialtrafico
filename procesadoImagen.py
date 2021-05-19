@@ -1,9 +1,10 @@
 # Proyecto creado por Eva María Hoyo de la Cruz, TongTong Xu y Antonio Francisco Roldan Martín
-import cv2
 import random
 import colorsys
-from guardarSalida import *
-from signalMask import *
+import guardarSalida
+import signalMask
+import cv2
+import numpy as np
 
 tamannoredimension = (25, 25)
 
@@ -100,12 +101,12 @@ def guardados(imagenAuxil, nombreimagee, funcionoriginar, x11, x22, y11, y22, im
         if imagenAuxil is not None:
             # redimensionamos imagen de la señal filtrada a 25*25
             redimensionado = cv2.resize(imagenAuxil, tamannoredimension, interpolation=cv2.INTER_AREA)
-            (puntos, variablesen) = correlarMascara(redimensionado)
+            (puntos, variablesen) = signalMask.correlarMascara(redimensionado)
             nombreimagee = nombreimagee[-9:]
             if variablesen != 4:
                 cv2.rectangle(imagenCopi, (x11, y11), (x22, y22), (0, 0, 255), 2)
-            guardarcarpetasyfichero(nombreimagee, funcionoriginar, x11, x22, y11, y22, variablesen, puntos)
-            guardarimagencarpeta(funcionoriginar, nombreimagee, imagenCopi)
+            guardarSalida.guardarcarpetasyfichero(nombreimagee, funcionoriginar, x11, x22, y11, y22, variablesen, puntos)
+            guardarSalida.guardarimagencarpeta(funcionoriginar, nombreimagee, imagenCopi)
     except:
         print(nombreimagee + " la imagen no funciona")
     return (imagenCopi)
