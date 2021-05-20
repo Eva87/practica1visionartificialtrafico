@@ -3,11 +3,6 @@ import procesadoImagen
 import glob
 import cv2
 
-'''for strinentradaimg in sorted(glob.glob("./train_10_ejemplos/*")):
-    finnombre = strinentradaimg[-3:]
-    for strinentradaim in sorted(glob.glob(strinentradaimg)):
-        if finnombre != "txt" and (finnombre == "jpg" or finnombre == "ppm"):'''
-
 
 class mser:
     def MSER(strinentradaimg):

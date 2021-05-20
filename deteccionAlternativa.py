@@ -4,11 +4,6 @@ import cv2
 import procesadoImagen
 import numpy as np
 
-'''for strinentradaimg in sorted(glob.glob("./train_10_ejemplos/*")):
-    finnombre = strinentradaimg[-3:]
-    for strinentradaim in sorted(glob.glob(strinentradaimg)):
-        if finnombre != "txt" and (finnombre == "jpg" or finnombre == "ppm"):'''
-
 
 class alternativa:
 
